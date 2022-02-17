@@ -1,5 +1,6 @@
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
 
 
 public class Main {
@@ -11,7 +12,9 @@ public class Main {
     static Integer estado_pant[] = {0, 1};          //Estado de la pantalla
     
     static int cant_pob = 10;                       //Cantidad de individuos de la poblacion
+    static double cant_ind_torneo = 5;              //Cantidad de individuos que compiten en un torneo
     static ArrayList<ArrayList<Integer>> poblacion = new ArrayList<>(); //Poblacion de todas las soluciones
+    static List<Integer> pob_padres = new ArrayList<>(); //Contenedor de los ID de los individuos elegidos en la seleccion de padres
 
     //Datos de entrada
     static int cant_mobil = 3;                                //Cantidad de dispositivos
@@ -20,9 +23,9 @@ public class Main {
     static Integer nivel_bat_obj[] = {85, 75, 90}; //new Integer[cant_mobil]; //Nivel bateria objetivo
 
     public static void inicializacionAleatoria(){
-        ArrayList<Integer> solucion;  // es necesario este new? porque se hace debajo
+        ArrayList<Integer> solucion;
 
-        System.out.println("*** Inicializacion Aleatoria");
+        //System.out.println("\n    Inicializacion Aleatoria");
         for(int j=0; j<cant_pob; j++){
             solucion= new ArrayList<>();
 
@@ -42,14 +45,70 @@ public class Main {
                     solucion.add(nivel_bat_intermedio);
                     solucion.add(nivel_bat_obj[i]);
                     solucion.add(estado_CPU[(int)(estado_CPU.length*Math.random())]);
-                    solucion.add(estado_pant[(int)(estado_pant.length*Math.random())]); //habia entendido que no se cambiaba el estado de la pantalla
+                    solucion.add(estado_pant[(int)(estado_pant.length*Math.random())]);
                 }
             }
             poblacion.add(solucion);
         }
     }
 
-    public static void mostrarPoblacion(ArrayList<ArrayList<Integer>> poblacion){
+    public static void fitness(){ //Hice una funcion fitness para tener con que comparar
+        //System.out.println("\n   Funcion de Fitness");
+        int suma= 0;
+        ArrayList<Integer> solucion;
+
+        for(int i=0; i<cant_pob; i++){
+            solucion= poblacion.get(i);
+
+            for(int j=0; j<solucion.size(); j++){
+                suma= suma+solucion.get(j);
+            }
+
+            solucion.add(suma);
+        }
+    }
+
+    public static int torneo(){
+        List<Integer> lista= new ArrayList<>();
+        int sol_intermedia;                           //Solucion intermedia
+        int mejor_sol= (int)Double.POSITIVE_INFINITY; //Mejor solucion
+        int indice_int_lista;                         //Indice intermedio de lista
+        int indice_int_pob;                           //Indice intermedio de poblacion
+        int indice_mejor_sol= -1;                     //Indice del mejor individuo del torneo
+        int indice_valor_fitness= poblacion.get(0).size()-1; //Posicion donde se almacena el valor de Fitness del individuo
+        
+        //System.out.println("\n  Torneo");
+        for(int i=0; i<cant_pob; i++){ //Creo una lista con todos los ID de los individuos de la poblacion
+            lista.add(i);
+        }
+
+        for(int i=0; i<cant_ind_torneo; i++){
+            indice_int_lista= (int)(Math.random()*lista.size());
+            indice_int_pob= lista.get(indice_int_lista);
+            sol_intermedia= poblacion.get(indice_int_pob).get(indice_valor_fitness);
+
+            if(sol_intermedia < mejor_sol){
+                indice_mejor_sol= indice_int_pob;
+                mejor_sol= sol_intermedia;
+            }
+            //mostrarIndividuo(poblacion.get(indice_int_pob));
+            lista.remove(indice_int_lista);
+        }
+        lista= null; //Para que el Garbage Collector marque el espacio de memoria como libre
+        //System.out.println("\n*** Solucion Elegida: "+ indice_mejor_sol);
+        //mostrarIndividuo(poblacion.get(indice_mejor_sol));
+
+        return indice_mejor_sol;
+    }
+
+    public static void seleccionPadres(){
+        //System.out.println("\n   Seleccion de Padres");
+        for(int i= 0; i<cant_pob; i++){
+            pob_padres.add(torneo());
+        }
+    }
+
+    public static void mostrarPoblacion(){
         System.out.println("** Mostrando la Poblacion");
         for(int j=0; j<cant_pob; j++){
             System.out.println("* Solucion "+j);
@@ -60,8 +119,28 @@ public class Main {
         }
     }
 
+    public static void mostrarIndividuo(ArrayList<Integer> solucion){
+        System.out.println("** Mostrando un Individuo");
+
+        for(int i=0; i<solucion.size(); i++){
+            System.out.print(solucion.get(i) + ",");
+        }
+        System.out.println("");
+    }
+
+    public static void mostrarListaPadres(){
+        System.out.println("** Mostrando Lista de Padres");
+        for(int i=0; i<pob_padres.size(); i++){
+            System.out.print(pob_padres.get(i) + ",");
+        }
+        System.out.println("");
+    }
+
     public static void main(String[] args) throws IOException {
         inicializacionAleatoria();
-        mostrarPoblacion(poblacion);
+        //mostrarPoblacion();
+        fitness();
+        seleccionPadres();
+        //mostrarListaPadres();
     }
 }
