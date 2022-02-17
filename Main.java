@@ -122,10 +122,10 @@ public class Main {
         ArrayList<Integer> hijo2;
 
         for(int i=0; i<cant_pob; i= i+2){
-            hijo1= new ArrayList<>(poblacion.get(i));
+            hijo1= new ArrayList<>(poblacion.get(pob_padres.get(i)));
             //System.out.println("");
             //mostrarIndividuo(hijo1);
-            hijo2= new ArrayList<>(poblacion.get(i+1));
+            hijo2= new ArrayList<>(poblacion.get(pob_padres.get(i+1)));
             //mostrarIndividuo(hijo2);
             prob_aleatoria= Math.random();
 
