@@ -1,6 +1,7 @@
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 
 public class Main {
@@ -12,23 +13,27 @@ public class Main {
     static Integer estado_CPU[] = {0,30,50,75,100}; //Estado del CPU del dispositivo
     static Integer estado_pant[] = {0, 1};          //Estado de la pantalla
     
-    static int cant_pob = 6;                         //Cantidad de individuos de la poblacion
-    static double cant_ind_torneo = 3;                //Cantidad de individuos que compiten en un torneo
+    static int cant_gen = 10;                         //Cantidad de Generaciones
+    static int cant_pob = 30;                         //Cantidad de individuos de la poblacion
+    static double cant_ind_torneo = 5;                //Cantidad de individuos que compiten en un torneo
     static double prob_cruce = 0.6;                   //Probabilidad de Cruce
     static int tam_bloque = long_sec*cant_parametros; //Tamano del bloque para el Cruce Uniforme
     static double prob_cruce_uniforme = 0.5;          //Probabilidad de Cruce Uniforme
     static double prob_mutacion = 0.3;                //Probabilidad de Mutacion
+    static int cant_st = 5;                           //Variable de seleccion para Steady-State
 
     static ArrayList<ArrayList<Integer>> poblacion = new ArrayList<>(); //Poblacion de todas las soluciones
     static List<Integer> pob_padres = new ArrayList<>(); //Contenedor de los ID de los individuos elegidos en la seleccion de padres
     static ArrayList<ArrayList<Integer>> pob_hijos = new ArrayList<>(); //Poblacion de todas las soluciones hijas
 
     //Datos de entrada
-    
     static int cant_mobil = 5;                                //Cantidad de dispositivos
     static String modelo[] = {"Xiaomi", "Motorola", "Samsung"}; //new String[cant_mobil];          //Modelo de dispositivo
     static Integer nivel_bat_act[] = {20, 30, 40, 22, 25}; //new Integer[cant_mobil]; //Nivel bateria actual
     static Integer nivel_bat_obj[] = {85, 75, 90, 83, 87}; //new Integer[cant_mobil]; //Nivel bateria objetivo
+
+    //Dato de salida
+    static StringBuilder salida = new StringBuilder();
 
     public static void inicializacionAleatoria(){
         ArrayList<Integer> solucion;
@@ -60,14 +65,14 @@ public class Main {
         }
     }
 
-    public static void fitness(){ //Hice una funcion fitness para tener con que comparar
+    public static void fitness(ArrayList<ArrayList<Integer>> pob){ //Hice una funcion fitness para tener con que comparar
         //System.out.println("\n   Funcion de Fitness");
         int suma= 0;
         ArrayList<Integer> solucion;
 
         for(int i=0; i<cant_pob; i++){
             suma= 0;
-            solucion= poblacion.get(i);
+            solucion= pob.get(i);
 
             for(int j=0; j<solucion.size(); j++){
                 suma= suma+solucion.get(j);
@@ -270,6 +275,103 @@ public class Main {
         }
     }
 
+    public static void quickSort(ArrayList<ArrayList<Integer>> pob, int start, int end){
+        int q;
+
+        if(start<end){
+            q = partition(pob, start, end);
+            quickSort(pob, start, q);
+            quickSort(pob, q+1, end);
+        }
+    }
+
+    static int nextIntInRange(int min, int max, Random rng) {
+        if (min > max) {
+           throw new IllegalArgumentException("Rango no valido [" + min + ", " + max + "].");
+        }
+        int diff = max - min;
+        if (diff >= 0 && diff != Integer.MAX_VALUE) {
+           return (min + rng.nextInt(diff + 1));
+        }
+        int i;
+        do {
+           i = rng.nextInt();
+        } while (i < min || i > max);
+        return i;
+     }
+
+    static int partition(ArrayList<ArrayList<Integer>> pob, int start, int end){
+        int init = start;
+        int length = end;
+        int indice_valor_fitness= poblacion.get(0).size()-1; //Posicion donde se almacena el valor de Fitness del individuo
+        ArrayList<Integer> pivot;
+        ArrayList<Integer> temp;
+        
+        Random r = new Random();
+        int pivotIndex = nextIntInRange(start,end,r);
+        pivot = pob.get(pivotIndex);
+                
+        while(true){
+            while(pob.get(length).get(indice_valor_fitness) > pivot.get(indice_valor_fitness) && length > start){
+                length--;
+            }
+            
+            while(pob.get(init).get(indice_valor_fitness) < pivot.get(indice_valor_fitness) && init < end){
+                init++;
+            }
+            
+            if(init<length){
+                temp = pob.get(init);
+                pob.set(init, pob.get(length));
+                pob.set(length, temp);
+                length--;
+                init++;
+            }
+            else{
+                return length;
+            }
+        } 
+    }
+
+    public static int stady_State(){
+        int pos=cant_pob-1;
+        //System.out.println("   Seleccion de Sobrevivientes");
+        //System.out.println("  Ordenando Poblacion con QuickSort");
+        quickSort(poblacion, 0, cant_pob-1);
+/*
+        System.out.println("  Mostrando luego del QuickSort");
+        for(int i=0; i<poblacion.size(); i++){
+            System.out.print(poblacion.get(i).get(poblacion.get(i).size()-1) + ",");
+        }
+*/
+        //System.out.println("\n\n  Ordenando Hijos con QuickSort");
+        quickSort(pob_hijos, 0, cant_pob-1);
+/*
+        System.out.println("  Mostrando luego del QuickSort");
+        for(int i=0; i<pob_hijos.size(); i++){
+            System.out.print(pob_hijos.get(i).get(pob_hijos.get(i).size()-1)+ ",");
+        }
+*/
+        int mejor_padre= poblacion.get(0).get(poblacion.get(0).size()-1);
+        int mejor_hijo= pob_hijos.get(0).get(pob_hijos.get(0).size()-1);
+        if(mejor_hijo < mejor_padre){
+            mejor_padre= mejor_hijo;
+        }
+
+        //System.out.println("\n\n  Reemplazo los "+cant_st+" peores Padres por Hijos");
+        for(int i=0; i<cant_st; i++){
+            //mostrarIndividuo(poblacion.get(i));
+            poblacion.set(pos, pob_hijos.get(i));
+            //mostrarIndividuo(poblacion.get(i));
+            pos--;
+        }
+
+        pob_hijos.clear();
+        pob_padres.clear();
+
+        return mejor_padre;
+    }
+
 
     public static void mostrarPoblacion(ArrayList<ArrayList<Integer>> pob){
         System.out.println("** Mostrando la Poblacion");
@@ -299,19 +401,67 @@ public class Main {
         System.out.println("");
     }
 
-    public static void main(String[] args) throws IOException {
-        inicializacionAleatoria();
-        //mostrarPoblacion(poblacion);
-        fitness();
-        seleccionPadres();
-        //mostrarListaPadres();
-        //cruceUniforme();
-        cruceUniformeExtremo();
 
-        System.out.println("\n Hijos SIN Mutar\n");
-        mostrarPoblacion(pob_hijos);
-        mutacion();
-        System.out.println("\n\n Hijos Mutados\n");
-        mostrarPoblacion(pob_hijos);
+    public static void inicioArchivo(){
+/*
+        //Todo esto para leer un archivo de entrada
+        FileChooser file = new FileChooser();
+        String dir = file.run();
+        Archivo.getInstance().read(dir);
+        String[] saux= dir.split("/");
+        salida.append("Archivo: "+saux[saux.length-1]+"\n");
+*/
+        salida.append("Cantidad de Mobiles: "+cant_mobil+" \n");
+        salida.append("Cantidad de Generaciones: "+cant_gen+" \n");
+        salida.append("Cantidad de individuos de la Poblacion: "+cant_pob+" \n");
+        salida.append("Probabilidad de Cruce: "+prob_cruce+" \n");
+        salida.append("Probabilidad de Cruce inter-bloque: "+prob_cruce_uniforme+" \n");
+        salida.append("Probabilidad de Mutacion: "+prob_mutacion+" \n");
+        salida.append("Cantidad de individuos por Torneo: "+cant_ind_torneo+" \n");
+        salida.append("Cantidad de individuos para Steady-State: "+cant_st+" \n");
+    }
+    
+    public static void guardarMejorSolucion(ArrayList<Integer> solucion){
+        salida.append("\n\n** Mejor Solucion\n");
+
+        for(int i=0; i<solucion.size(); i++){
+            if(i+1 != solucion.size())
+                salida.append(solucion.get(i) + ",");
+            else
+                salida.append(solucion.get(i));
+        }
+    }
+
+    public static void finArchivo(long startTime){
+        long endTime = System.currentTimeMillis();
+        quickSort(poblacion, 0, cant_pob-1);
+        guardarMejorSolucion(poblacion.get(0));
+
+        salida.append("\n\nTiempo aproximado de ejecucion " + (endTime - startTime) + " milisegundos -> "+((endTime - startTime)/1000) + " segundos");
+    }
+
+    public static void main(String[] args) throws IOException {
+        inicioArchivo();
+        long startTime = System.currentTimeMillis();
+        
+        inicializacionAleatoria();
+        fitness(poblacion);
+        for(int i=0; i<cant_gen; i++){
+            salida.append("\n ------- Generacion "+i+" -------");
+            seleccionPadres();
+            //cruceUniforme();
+            cruceUniformeExtremo();
+            //System.out.println("\n Hijos SIN Mutar\n");
+            //mostrarPoblacion(pob_hijos);
+            mutacion();
+            //System.out.println("\n\n Hijos Mutados\n");
+            //mostrarPoblacion(pob_hijos);
+
+            fitness(pob_hijos);
+            salida.append("\n *** Mejor Fitness: "+stady_State()+"\n");
+        }
+        finArchivo(startTime);
+
+        Archivo.getInstance().write(salida.toString(), "output");
     }
 }
