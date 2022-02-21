@@ -1,5 +1,7 @@
 import java.io.IOException;
+import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
 
@@ -29,7 +31,7 @@ public class Main {
     //Datos de entrada
     static int cant_mobil = 5;                                //Cantidad de dispositivos
     static String modelo[] = {"Xiaomi", "Motorola", "Samsung"}; //new String[cant_mobil];          //Modelo de dispositivo
-    static Integer nivel_bat_act[] = {20, 30, 40, 22, 25}; //new Integer[cant_mobil]; //Nivel bateria actual
+    static Integer nivel_bat_act[] = {20, 30, 40, 50, 60}; //new Integer[cant_mobil]; //Nivel bateria actual
     static Integer nivel_bat_obj[] = {85, 75, 90, 83, 87}; //new Integer[cant_mobil]; //Nivel bateria objetivo
 
     //Dato de salida
@@ -225,8 +227,8 @@ public class Main {
         }
     }
 
-    public static void mutacion(){
-        //System.out.println("   Mutacion");
+    public static void mutacion_Julian(){
+        //System.out.println("   Mutacion Julian");
         double prob_aleatoria;
         int[] lista_pos_mutar= {2,3,4,8,9}; //Lista de posiciones del bloque que voy a mutar
 
@@ -273,6 +275,65 @@ public class Main {
                 }
             }
         }
+    }
+
+    public static void mutacion_Virginia(){
+        //System.out.println("   Mutacion Virginia");
+        double prob_aleatoria;
+        int[] lista_pos_mutar= {2,3,4,8,9}; //Lista de posiciones del bloque que voy a mutar
+        List<Integer> niveles_bateria= new ArrayList<>();
+        
+        for(int i=0; i<=100; i++){ //Inicializo variable con niveles de bateria
+            niveles_bateria.add(i);
+        }
+///*
+        for(int i=0; i<pob_hijos.size(); i++){ //Por cada hijo
+            for(int j=0; j<cant_mobil; j++){ //Por cada mobil
+                for(int k=0; k<lista_pos_mutar.length; k++){ //Por cada valor del bloque que quiero mutar
+                    prob_aleatoria= Math.random();
+
+                    if(prob_aleatoria < prob_mutacion){
+                        int pos_bloque_inter= lista_pos_mutar[k]+(j*tam_bloque);
+                        int valor_intermedio= -1;
+                        List<Integer> aux;
+
+                        switch(lista_pos_mutar[k]){
+                            case 2:
+                                int bat_inter= pob_hijos.get(i).get(pos_bloque_inter-1);
+                                aux= new ArrayList<>(niveles_bateria);
+
+                                aux.remove(bat_inter);
+                                aux= aux.subList(bat_inter, nivel_bat_obj[j]-1);
+
+                                valor_intermedio= aux.get((int)(Math.random()*aux.size()));
+                                break;
+                            
+                            case 3:case 8: 
+                                aux= new ArrayList<>(Arrays.asList(estado_CPU));
+                                aux.remove(aux.indexOf(pob_hijos.get(i).get(pos_bloque_inter)));
+
+                                valor_intermedio= aux.get((int)(aux.size()*Math.random()));
+                                break;
+
+                            case 4:case 9:
+                                valor_intermedio= 0;
+                                if(pob_hijos.get(i).get(pos_bloque_inter) == 0)
+                                    valor_intermedio= 1;
+                                
+                                break;
+
+                            default: System.out.println("Error de caso");
+                        }
+                        pob_hijos.get(i).set(pos_bloque_inter, valor_intermedio);
+                        
+                        if(lista_pos_mutar[k] == 2){ //Si es 2 significa que tengo que cambiar los valores de carga de bateria
+                            pos_bloque_inter += 4;
+                            pob_hijos.get(i).set(pos_bloque_inter, valor_intermedio);
+                        }
+                    }
+                }
+            }
+        }//*/
     }
 
     public static void quickSort(ArrayList<ArrayList<Integer>> pob, int start, int end){
@@ -446,22 +507,19 @@ public class Main {
         
         inicializacionAleatoria();
         fitness(poblacion);
+
         for(int i=0; i<cant_gen; i++){
             salida.append("\n ------- Generacion "+i+" -------");
             seleccionPadres();
             //cruceUniforme();
             cruceUniformeExtremo();
-            //System.out.println("\n Hijos SIN Mutar\n");
-            //mostrarPoblacion(pob_hijos);
-            mutacion();
-            //System.out.println("\n\n Hijos Mutados\n");
-            //mostrarPoblacion(pob_hijos);
-
+            //mutacion_Julian();
+            mutacion_Virginia();
             fitness(pob_hijos);
             salida.append("\n *** Mejor Fitness: "+stady_State()+"\n");
         }
         finArchivo(startTime);
 
-        Archivo.getInstance().write(salida.toString(), "output");
+        Archivo.write(salida.toString());
     }
 }
