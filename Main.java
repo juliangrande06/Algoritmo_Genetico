@@ -27,7 +27,7 @@ public class Main {
     static int tam_bloque = long_sec*cant_parametros; //Tamano del bloque para el Cruce Uniforme
     static double prob_cruce_uniforme = 0.5;          //Probabilidad de Cruce Uniforme
     static double prob_mutacion = 0.1;                //Probabilidad de Mutacion
-    static int cant_st = 50;                         //Variable de seleccion para Steady-State
+    static int cant_st = 100;                         //Variable de seleccion para Steady-State
 
     static ArrayList<ArrayList<Double>> poblacion = new ArrayList<>(); //Poblacion de todas las soluciones
     static List<Integer> pob_padres = new ArrayList<>();               //Contenedor de los ID de los individuos elegidos en la seleccion de padres
@@ -45,6 +45,7 @@ public class Main {
 
     public static void inicializacionAleatoria(){
         ArrayList<Double> solucion;
+        int nivel_bat_intermedio;
 
         //System.out.println("\n   Inicializacion Aleatoria");
         for(int j=0; j<cant_pob; j++){
@@ -54,7 +55,10 @@ public class Main {
             	solucion.add(0.0);    // se usa para expresar que la tarea es de carga
                 solucion.add((double)nivel_bat_act[i]);
 
-                int nivel_bat_intermedio= ((int)(Math.random()*(nivel_bat_obj[i] - nivel_bat_act[i] -1)) + nivel_bat_act[i]+1);
+                if(nivel_bat_act[i]+1 != nivel_bat_obj[i])
+                    nivel_bat_intermedio= ((int)(Math.random()*(nivel_bat_obj[i] - nivel_bat_act[i] -1)) + nivel_bat_act[i]+1);
+                else
+                    nivel_bat_intermedio= ((int)(Math.random()*2) + nivel_bat_act[i]);
                 
                 solucion.add((double)nivel_bat_intermedio);
 
