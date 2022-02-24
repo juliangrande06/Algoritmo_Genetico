@@ -1,3 +1,4 @@
+
 import java.io.IOException;
 import java.lang.reflect.Array;
 import java.text.DecimalFormat;
@@ -19,24 +20,24 @@ public class Main {
     static Integer estado_CPU[] = {0,30,50,75,100}; //Estado del CPU del dispositivo
     static Integer estado_pant[] = {0, 1};          //Estado de la pantalla
     
-    static int cant_gen = 30;                         //Cantidad de Generaciones
-    static int cant_pob = 200;                         //Cantidad de individuos de la poblacion
-    static int cant_ind_torneo = 5;                //Cantidad de individuos que compiten en un torneo
-    static double prob_cruce = 0.6;                   //Probabilidad de Cruce
+    static int cant_gen = 10000;                       //Cantidad de Generaciones
+    static int cant_pob = 300;                        //Cantidad de individuos de la poblacion
+    static int cant_ind_torneo = 5;                   //Cantidad de individuos que compiten en un torneo
+    static double prob_cruce = 1;                     //Probabilidad de Cruce
     static int tam_bloque = long_sec*cant_parametros; //Tamano del bloque para el Cruce Uniforme
     static double prob_cruce_uniforme = 0.5;          //Probabilidad de Cruce Uniforme
-    static double prob_mutacion = 0.3;                //Probabilidad de Mutacion
-    static int cant_st = 5;                           //Variable de seleccion para Steady-State
+    static double prob_mutacion = 0.1;                //Probabilidad de Mutacion
+    static int cant_st = 50;                         //Variable de seleccion para Steady-State
 
     static ArrayList<ArrayList<Double>> poblacion = new ArrayList<>(); //Poblacion de todas las soluciones
-    static List<Integer> pob_padres = new ArrayList<>(); //Contenedor de los ID de los individuos elegidos en la seleccion de padres
+    static List<Integer> pob_padres = new ArrayList<>();               //Contenedor de los ID de los individuos elegidos en la seleccion de padres
     static ArrayList<ArrayList<Double>> pob_hijos = new ArrayList<>(); //Poblacion de todas las soluciones hijas
 
     //Datos de entrada
-    static int cant_mobil = 5;                                //Cantidad de dispositivos
-    static String modelo[] = {"Xiaomi_Redmi_Note_7", "motorola_moto_g6", "samsung_SM_A305G", "Xiaomi_Mi_A2_Lite", "motorola_moto_g6"}; //new String[cant_mobil];          //Modelo de dispositivo
-    static Integer nivel_bat_act[] = {20, 30, 40, 50, 60}; //new Integer[cant_mobil]; //Nivel bateria actual
-    static Integer nivel_bat_obj[] = {85, 75, 90, 83, 87}; //new Integer[cant_mobil]; //Nivel bateria objetivo
+    static int cant_mobil;          //Cantidad de dispositivos
+    static String modelo[];         //Modelo de dispositivo
+    static Integer nivel_bat_act[]; //Nivel bateria actual
+    static Integer nivel_bat_obj[]; //Nivel bateria objetivo
     static List<Double> target = new ArrayList<>();
 
     //Dato de salida
@@ -45,7 +46,7 @@ public class Main {
     public static void inicializacionAleatoria(){
         ArrayList<Double> solucion;
 
-        //System.out.println("\n    Inicializacion Aleatoria");
+        //System.out.println("\n   Inicializacion Aleatoria");
         for(int j=0; j<cant_pob; j++){
             solucion= new ArrayList<>();
 
@@ -97,10 +98,11 @@ public class Main {
         }
     }
 
-    public static void fitness(ArrayList<ArrayList<Double>> pob){//Lista de Double para mejorar precision?
+    public static void fitness(ArrayList<ArrayList<Double>> pob){
         //System.out.println("\n   Funcion de Fitness");
         int suma, bloque, fila1, fila2, columna;
         double sumatoria;
+        ArrayList<Integer> sumados= new ArrayList<>();
         double max_target= Collections.max(target);
         ArrayList<Double> solucion;
 
@@ -151,10 +153,15 @@ public class Main {
                         }
                     }
                 }
+                sumados.add(suma);
                 sumatoria += Math.pow(suma - max_target, 2);
             }
             //System.out.println("Sumatoria: "+sumatoria);
+            for(int j=0; j<sumados.size(); j++){
+                solucion.add((double)sumados.get(j));
+            }
             solucion.add(Math.sqrt(sumatoria/cant_mobil));
+            sumados.clear();
         }
     }
 
@@ -232,10 +239,11 @@ public class Main {
                 //mostrarIndividuo(hijo2);
             }
             //Limpio valores de Fitnes acarreado por los padres
-            int max_indice= cant_mobil*tam_bloque;
-            for(int j=max_indice; j<hijo1.size(); j++){
-                hijo1.remove(j);
-                hijo2.remove(j);
+            int indice_inter= cant_mobil*tam_bloque;
+            int max_indice= hijo1.size()-indice_inter;
+            for(int j=0; j<max_indice; j++){
+                hijo1.remove(indice_inter);
+                hijo2.remove(indice_inter);
             }
 
             pob_hijos.add(hijo1);
@@ -288,10 +296,11 @@ public class Main {
                     //mostrarIndividuo(hijo2);
                 }
                 //Limpio valores de Fitnes acarreado por los padres
-                int max_indice= cant_mobil*tam_bloque;
-                for(int j=max_indice; j<hijo1.size(); j++){
-                    hijo1.remove(j);
-                    hijo2.remove(j);
+                int indice_inter= cant_mobil*tam_bloque;
+                int max_indice= hijo1.size()-indice_inter;
+                for(int j=0; j<max_indice; j++){
+                    hijo1.remove(indice_inter);
+                    hijo2.remove(indice_inter);
                 }
 
                 pob_hijos.add(hijo1);
@@ -301,7 +310,7 @@ public class Main {
     }
 
     public static void mutacion(){
-        //System.out.println("   Mutacion Virginia");
+        //System.out.println("\n   Mutacion");
         double prob_aleatoria;
         int[] lista_pos_mutar= {2,3,4,8,9}; //Lista de posiciones del bloque que voy a mutar
         List<Integer> niveles_bateria= new ArrayList<>();
@@ -324,10 +333,15 @@ public class Main {
                             case 2:
                                 int bat_inter= pob_hijos.get(i).get(pos_bloque_inter).intValue();
                                 aux= new ArrayList<>(niveles_bateria);
-
                                 aux.remove(bat_inter);
-                                aux= aux.subList(nivel_bat_act[j]+1, nivel_bat_obj[j]-2);
 
+                                if(nivel_bat_act[j]+1 != nivel_bat_obj[j]){
+                                    aux= aux.subList(nivel_bat_act[j]+1, nivel_bat_obj[j]-1);
+                                }
+                                else{
+                                    aux= aux.subList(nivel_bat_act[j], nivel_bat_obj[j]);
+                                }
+                                
                                 valor_intermedio= aux.get((int)(Math.random()*aux.size()));
                                 break;
                             
@@ -420,13 +434,13 @@ public class Main {
     public static double stady_State(){
         int pos=cant_pob-1;
         //System.out.println("   Seleccion de Sobrevivientes");
-        quickSort(poblacion, 0, cant_pob-1);
+        quickSort(poblacion, 0, pos);
 /*
         for(int i=0; i<poblacion.size(); i++){
             System.out.print(poblacion.get(i).get(poblacion.get(i).size()-1)+", ");
         }
 */
-        quickSort(pob_hijos, 0, cant_pob-1);
+        quickSort(pob_hijos, 0, pos);
 
         double mejor_padre= poblacion.get(0).get(poblacion.get(0).size()-1);
         double mejor_hijo= pob_hijos.get(0).get(pob_hijos.get(0).size()-1);
@@ -446,6 +460,7 @@ public class Main {
         return mejor_padre;
     }
 
+
     public static void mostrarPoblacion(ArrayList<ArrayList<Double>> pob){
         System.out.println("** Mostrando la Poblacion");
         for(int j=0; j<cant_pob; j++){
@@ -454,7 +469,7 @@ public class Main {
                 if(i+1 < pob.get(j).size())
             	    System.out.print(pob.get(j).get(i).intValue() + ",");
                 else
-                    System.out.print(pob.get(j).get(i));
+                    System.out.print(pob.get(j).get(i).intValue());
             }
             System.out.println("");
         }
@@ -500,7 +515,7 @@ public class Main {
             if(i+1 < solucion.size())
                 salida.append(solucion.get(i).intValue() + ",");
             else
-                salida.append("  Fitness: "+nf.format(solucion.get(i)));
+                salida.append("\nFitness: "+nf.format(solucion.get(i)));
         }
     }
 
@@ -518,8 +533,7 @@ public class Main {
         max= Collections.max(target);
         min= Collections.min(target);
 
-        salida.append("  Target Critico: "+nf.format(max)+ "  Target Minimo: "+nf.format(min));
-        salida.append("\n\nTarget Critico - Fitness: "+ nf.format(max-bestFit)+"\nFitness - Target Minimo: "+ nf.format(bestFit-min));
+        salida.append("    Target Critico: "+nf.format(max)+ "  Target Minimo: "+nf.format(min));
     }
 
     public static void finArchivo(long startTime, double bestFit){
@@ -534,12 +548,17 @@ public class Main {
     public static void main(String[] args) throws IOException {
         NumberFormat nf= new DecimalFormat("##.###");
         double bestFit= 0.0;
+        
         try {
             Profiles.filterProfiles();
+            Archivo.readMoviles();
             setTarget();
         } catch (Exception e) {
             e.printStackTrace();
         }
+        
+        for (int i = 0; i < cant_mobil; i++) 
+        	System.out.println(i + " " + modelo[i] + " " + nivel_bat_act[i] + " " + nivel_bat_obj[i]);
 
         inicioArchivo();
         long startTime = System.currentTimeMillis();
@@ -557,11 +576,7 @@ public class Main {
             bestFit= stady_State();
             salida.append("\n"+i+": "+nf.format(bestFit));
         }
-        /*
-        System.out.println("int: "+Integer.MAX_VALUE+" long: "+Long.MAX_VALUE+" double: "+Double.MAX_VALUE);
-        double muestra= Math.pow(Profiles.model1_ScreenOff[100][4]*100, 2);
-        System.out.println(muestra);
-        */
+
         finArchivo(startTime, bestFit);
         Archivo.write(salida.toString());
     }
