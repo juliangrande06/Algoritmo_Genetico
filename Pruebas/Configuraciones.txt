@@ -7,6 +7,8 @@ Probabilidad de Cruce inter-bloque: 0.5
 Probabilidad de Mutacion: 0.1 
 Cantidad de individuos por Torneo: 5 
 Cantidad de individuos para Steady-State: 25
+Promedio: 30725,0737
+Mejor Solucion: 30652,597
 
 ------------------ Configuracion 2 ------------------
 Cantidad de Mobiles: 4 
@@ -17,6 +19,8 @@ Probabilidad de Cruce inter-bloque: 0.5
 Probabilidad de Mutacion: 0.1 
 Cantidad de individuos por Torneo: 5 
 Cantidad de individuos para Steady-State: 50 
+Promedio: 30828,5998
+Mejor Solucion: 30652,597
 
 ------------------ Configuracion 3 ------------------
 Cantidad de Mobiles: 4 
@@ -27,8 +31,10 @@ Probabilidad de Cruce inter-bloque: 0.5
 Probabilidad de Mutacion: 0.1 
 Cantidad de individuos por Torneo: 10 
 Cantidad de individuos para Steady-State: 25 
+Promedio: 30939,217
+Mejor Solucion: 30653,003
 
------------------- Configuracion 4 ------------------
+------------------ Configuracion 4 ------------------ X
 Cantidad de Mobiles: 4 
 Cantidad de Generaciones: 5000 
 Cantidad de individuos de la Poblacion: 100 
@@ -37,6 +43,8 @@ Probabilidad de Cruce inter-bloque: 0.5
 Probabilidad de Mutacion: 0.1 
 Cantidad de individuos por Torneo: 10 
 Cantidad de individuos para Steady-State: 50 
+Promedio: 30707,6595
+Mejor Solucion: 30652,597
 
 ------------------ Configuracion 5 ------------------
 Cantidad de Mobiles: 4 
@@ -47,6 +55,8 @@ Probabilidad de Cruce inter-bloque: 0.5
 Probabilidad de Mutacion: 0.2 
 Cantidad de individuos por Torneo: 5 
 Cantidad de individuos para Steady-State: 25 
+Promedio: 30769,324
+Mejor Solucion: 30655,543
 
 ------------------ Configuracion 6 ------------------
 Cantidad de Mobiles: 4 
@@ -57,6 +67,8 @@ Probabilidad de Cruce inter-bloque: 0.5
 Probabilidad de Mutacion: 0.2 
 Cantidad de individuos por Torneo: 5 
 Cantidad de individuos para Steady-State: 50 
+Promedio: 30825,6663
+Mejor Solucion: 30653,003
 
 ------------------ Configuracion 7 ------------------
 Cantidad de Mobiles: 4 
@@ -67,6 +79,8 @@ Probabilidad de Cruce inter-bloque: 0.5
 Probabilidad de Mutacion: 0.2 
 Cantidad de individuos por Torneo: 10 
 Cantidad de individuos para Steady-State: 25 
+Promedio: 30801,5255
+Mejor Solucion: 30652,597
 
 ------------------ Configuracion 8 ------------------
 Cantidad de Mobiles: 4 
@@ -77,6 +91,8 @@ Probabilidad de Cruce inter-bloque: 0.5
 Probabilidad de Mutacion: 0.2 
 Cantidad de individuos por Torneo: 10 
 Cantidad de individuos para Steady-State: 50 
+Promedio: 30778,6657
+Mejor Solucion: 30653,353
 
 ------------------ Configuracion 9 ------------------
 Cantidad de Mobiles: 4 
@@ -87,6 +103,8 @@ Probabilidad de Cruce inter-bloque: 0.5
 Probabilidad de Mutacion: 0.3 
 Cantidad de individuos por Torneo: 5 
 Cantidad de individuos para Steady-State: 25 
+Promedio: 31574,712
+Mejor Solucion: 30653,003
 
 ------------------ Configuracion 10 ------------------
 Cantidad de Mobiles: 4 
@@ -97,6 +115,8 @@ Probabilidad de Cruce inter-bloque: 0.5
 Probabilidad de Mutacion: 0.3 
 Cantidad de individuos por Torneo: 5 
 Cantidad de individuos para Steady-State: 50 
+Promedio: 322125,569
+Mejor Solucion: 30652,597
 
 ------------------ Configuracion 11 ------------------
 Cantidad de Mobiles: 4 
@@ -107,6 +127,8 @@ Probabilidad de Cruce inter-bloque: 0.5
 Probabilidad de Mutacion: 0.3 
 Cantidad de individuos por Torneo: 10 
 Cantidad de individuos para Steady-State: 25 
+Promedio: 31339,3128
+Mejor Solucion: 30652,597
 
 ------------------ Configuracion 12 ------------------
 Cantidad de Mobiles: 4 
@@ -117,6 +139,8 @@ Probabilidad de Cruce inter-bloque: 0.5
 Probabilidad de Mutacion: 0.3 
 Cantidad de individuos por Torneo: 10 
 Cantidad de individuos para Steady-State: 50 
+Promedio: 31063,8546
+Mejor Solucion: 30652,597
 
 ------------------ Configuracion 13 ------------------
 Cantidad de Mobiles: 4 
@@ -127,6 +151,8 @@ Probabilidad de Cruce inter-bloque: 0.5
 Probabilidad de Mutacion: 0.4 
 Cantidad de individuos por Torneo: 5 
 Cantidad de individuos para Steady-State: 25 
+Promedio: 36286,661
+Mejor Solucion: 30918,565
 
 ------------------ Configuracion 14 ------------------
 Cantidad de Mobiles: 4 
@@ -137,6 +163,8 @@ Probabilidad de Cruce inter-bloque: 0.5
 Probabilidad de Mutacion: 0.4 
 Cantidad de individuos por Torneo: 5 
 Cantidad de individuos para Steady-State: 50 
+Promedio: 45548,6687
+Mejor Solucion: 33668,307
 
 ------------------ Configuracion 15 ------------------
 Cantidad de Mobiles: 4 
@@ -147,6 +175,8 @@ Probabilidad de Cruce inter-bloque: 0.5
 Probabilidad de Mutacion: 0.4 
 Cantidad de individuos por Torneo: 10 
 Cantidad de individuos para Steady-State: 25 
+Promedio: 41815,8747
+Mejor Solucion: 30697,622
 
 ------------------ Configuracion 16 ------------------
 Cantidad de Mobiles: 4 
@@ -157,6 +187,8 @@ Probabilidad de Cruce inter-bloque: 0.5
 Probabilidad de Mutacion: 0.4 
 Cantidad de individuos por Torneo: 10 
 Cantidad de individuos para Steady-State: 50 
+Promedio: 35644,1617
+Mejor Solucion: 31126,103
 
 ------------------ Configuracion 17 ------------------
 Cantidad de Mobiles: 4 
@@ -167,6 +199,8 @@ Probabilidad de Cruce inter-bloque: 0.5
 Probabilidad de Mutacion: 0.1 
 Cantidad de individuos por Torneo: 5 
 Cantidad de individuos para Steady-State: 50 
+Promedio: 30709,5929
+Mejor Solucion: 30653,353
 
 ------------------ Configuracion 18 ------------------
 Cantidad de Mobiles: 4 
@@ -177,6 +211,8 @@ Probabilidad de Cruce inter-bloque: 0.5
 Probabilidad de Mutacion: 0.1 
 Cantidad de individuos por Torneo: 5 
 Cantidad de individuos para Steady-State: 100 
+Promedio: 30796,7916
+Mejor Solucion: 30653,353
 
 ------------------ Configuracion 19 ------------------
 Cantidad de Mobiles: 4 
@@ -187,6 +223,8 @@ Probabilidad de Cruce inter-bloque: 0.5
 Probabilidad de Mutacion: 0.1 
 Cantidad de individuos por Torneo: 10 
 Cantidad de individuos para Steady-State: 50
+Promedio: 30721,2723
+Mejor Solucion: 30653,353
 
 ------------------ Configuracion 20 ------------------
 Cantidad de Mobiles: 4 
@@ -197,6 +235,8 @@ Probabilidad de Cruce inter-bloque: 0.5
 Probabilidad de Mutacion: 0.1 
 Cantidad de individuos por Torneo: 10 
 Cantidad de individuos para Steady-State: 100 
+Promedio: 30810,7808
+Mejor Solucion: 30653,003
 
 ------------------ Configuracion 21 ------------------ 
 Cantidad de Mobiles: 4 
@@ -207,6 +247,8 @@ Probabilidad de Cruce inter-bloque: 0.5
 Probabilidad de Mutacion: 0.2 
 Cantidad de individuos por Torneo: 5 
 Cantidad de individuos para Steady-State: 50 
+Promedio: 30754,7649
+Mejor Solucion: 30653,003
 
 ------------------ Configuracion 22 ------------------
 Cantidad de Mobiles: 4 
@@ -217,6 +259,8 @@ Probabilidad de Cruce inter-bloque: 0.5
 Probabilidad de Mutacion: 0.2 
 Cantidad de individuos por Torneo: 5 
 Cantidad de individuos para Steady-State: 100 
+Promedio: 30718,6716
+Mejor Solucion: 30652,597
 
 ------------------ Configuracion 23 ------------------
 Cantidad de Mobiles: 4 
@@ -227,6 +271,8 @@ Probabilidad de Cruce inter-bloque: 0.5
 Probabilidad de Mutacion: 0.2 
 Cantidad de individuos por Torneo: 10 
 Cantidad de individuos para Steady-State: 50 
+Promedio: 30718,1959
+Mejor Solucion: 30652,597
 
 ------------------ Configuracion 24 ------------------
 Cantidad de Mobiles: 4 
@@ -237,6 +283,8 @@ Probabilidad de Cruce inter-bloque: 0.5
 Probabilidad de Mutacion: 0.2 
 Cantidad de individuos por Torneo: 10 
 Cantidad de individuos para Steady-State: 100
+Promedio: 30779,5362
+Mejor Solucion: 30652,597
 
 ------------------ Configuracion 25 ------------------
 Cantidad de Mobiles: 4 
@@ -247,6 +295,8 @@ Probabilidad de Cruce inter-bloque: 0.5
 Probabilidad de Mutacion: 0.3 
 Cantidad de individuos por Torneo: 5 
 Cantidad de individuos para Steady-State: 50 
+Promedio: 30761,0646
+Mejor Solucion: 30653,003
 
 ------------------ Configuracion 26 ------------------
 Cantidad de Mobiles: 4 
@@ -257,6 +307,8 @@ Probabilidad de Cruce inter-bloque: 0.5
 Probabilidad de Mutacion: 0.3 
 Cantidad de individuos por Torneo: 5 
 Cantidad de individuos para Steady-State: 100 
+Promedio: 30827,5045
+Mejor Solucion: 30653,759
 
 ------------------ Configuracion 27 ------------------
 Cantidad de Mobiles: 4 
@@ -267,6 +319,8 @@ Probabilidad de Cruce inter-bloque: 0.5
 Probabilidad de Mutacion: 0.3 
 Cantidad de individuos por Torneo: 10 
 Cantidad de individuos para Steady-State: 50 
+Promedio: 30759,9594
+Mejor Solucion: 30653,353
 
 ------------------ Configuracion 28 ------------------
 Cantidad de Mobiles: 4 
@@ -277,6 +331,8 @@ Probabilidad de Cruce inter-bloque: 0.5
 Probabilidad de Mutacion: 0.3 
 Cantidad de individuos por Torneo: 10 
 Cantidad de individuos para Steady-State: 100 
+Promedio: 30984,3502
+Mejor Solucion: 30652,597
 
 ------------------ Configuracion 29 ------------------
 Cantidad de Mobiles: 4 
@@ -287,6 +343,8 @@ Probabilidad de Cruce inter-bloque: 0.5
 Probabilidad de Mutacion: 0.4 
 Cantidad de individuos por Torneo: 5 
 Cantidad de individuos para Steady-State: 50 
+Promedio: 33277,4897
+Mejor Solucion: 31020,651
 
 ------------------ Configuracion 30 ------------------
 Cantidad de Mobiles: 4 
@@ -297,6 +355,8 @@ Probabilidad de Cruce inter-bloque: 0.5
 Probabilidad de Mutacion: 0.4 
 Cantidad de individuos por Torneo: 5 
 Cantidad de individuos para Steady-State: 100 
+Promedio: 35341,7374
+Mejor Solucion: 31162,242
 
 ------------------ Configuracion 31 ------------------
 Cantidad de Mobiles: 4 
@@ -307,6 +367,8 @@ Probabilidad de Cruce inter-bloque: 0.5
 Probabilidad de Mutacion: 0.4 
 Cantidad de individuos por Torneo: 10 
 Cantidad de individuos para Steady-State: 50 
+Promedio: 34164,6351
+Mejor Solucion: 31377,529
 
 ------------------ Configuracion 32 ------------------
 Cantidad de Mobiles: 4 
@@ -317,3 +379,5 @@ Probabilidad de Cruce inter-bloque: 0.5
 Probabilidad de Mutacion: 0.4 
 Cantidad de individuos por Torneo: 10 
 Cantidad de individuos para Steady-State: 100 
+Promedio: 37129,8367
+Mejor Solucion: 30666,444
