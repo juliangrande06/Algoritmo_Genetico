@@ -20,13 +20,13 @@ public class Main {
     static Integer estado_CPU[] = {0,30,50,75,100}; //Estado del CPU del dispositivo
     static Integer estado_pant[] = {0, 1};          //Estado de la pantalla
     
-    static int cant_gen = 10000;                       //Cantidad de Generaciones
-    static int cant_pob = 300;                        //Cantidad de individuos de la poblacion
-    static int cant_ind_torneo = 5;                   //Cantidad de individuos que compiten en un torneo
-    static double prob_cruce = 1;                     //Probabilidad de Cruce
+    static int cant_gen = 5000;                       //Cantidad de Generaciones
+    static int cant_pob = 200;                        //Cantidad de individuos de la poblacion
+    static int cant_ind_torneo = 10;                   //Cantidad de individuos que compiten en un torneo
+    static double prob_cruce = 1.0;                     //Probabilidad de Cruce
     static int tam_bloque = long_sec*cant_parametros; //Tamano del bloque para el Cruce Uniforme
     static double prob_cruce_uniforme = 0.5;          //Probabilidad de Cruce Uniforme
-    static double prob_mutacion = 0.1;                //Probabilidad de Mutacion
+    static double prob_mutacion = 0.4;                //Probabilidad de Mutacion
     static int cant_st = 100;                         //Variable de seleccion para Steady-State
 
     static ArrayList<ArrayList<Double>> poblacion = new ArrayList<>(); //Poblacion de todas las soluciones
@@ -337,16 +337,19 @@ public class Main {
                             case 2:
                                 int bat_inter= pob_hijos.get(i).get(pos_bloque_inter).intValue();
                                 aux= new ArrayList<>(niveles_bateria);
-                                aux.remove(bat_inter);
-
+                                
                                 if(nivel_bat_act[j]+1 != nivel_bat_obj[j]){
-                                    aux= aux.subList(nivel_bat_act[j]+1, nivel_bat_obj[j]-1);
+                                	aux.remove(bat_inter);                                		
+                                    aux= aux.subList(nivel_bat_act[j]+1, nivel_bat_obj[j]-2);
+                                    valor_intermedio= aux.get((int)(Math.random()*aux.size()));
                                 }
                                 else{
-                                    aux= aux.subList(nivel_bat_act[j], nivel_bat_obj[j]);
-                                }
-                                
-                                valor_intermedio= aux.get((int)(Math.random()*aux.size()));
+                                    if(bat_inter == nivel_bat_act[j])    
+                                	    valor_intermedio=nivel_bat_obj[j];
+                                    else
+                                    if(bat_inter == nivel_bat_obj[j])	
+                                	    valor_intermedio=nivel_bat_act[j];                                                               	
+                                }                          
                                 break;
                             
                             case 3:case 8: 
@@ -549,7 +552,7 @@ public class Main {
         salida.append("\n\nTiempo aproximado de ejecucion " + (endTime - startTime) + " milisegundos -> "+((endTime - startTime)/1000) + " segundos");
     }
 
-    public static void main(String[] args) throws IOException {
+    public static void running(){
         NumberFormat nf= new DecimalFormat("##.###");
         double bestFit= 0.0;
         
@@ -569,19 +572,41 @@ public class Main {
         
         inicializacionAleatoria();
         fitness(poblacion);
+        
+        //mostrarPoblacion(poblacion);
 
         salida.append("\n< Generacion: Mejor Fitness >");
         for(int i=0; i<cant_gen; i++){
             seleccionPadres();
+            
+            //mostrarListaPadres();
+            
             //cruceUniforme();
             cruceUniformeExtremo();
+            
+            //mostrarPoblacion(pob_hijos);
+            
             mutacion();
+            
+            //mostrarPoblacion(pob_hijos);
+            
             fitness(pob_hijos);
             bestFit= stady_State();
             salida.append("\n"+i+": "+nf.format(bestFit));
         }
 
         finArchivo(startTime, bestFit);
-        Archivo.write(salida.toString());
+        try {
+            Archivo.write(salida.toString());
+        } catch (IOException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+    }
+    public static void main(String[] args) throws IOException {
+        for(int i=0; i<10; i++){
+            running();
+            poblacion.clear();
+        }
     }
 }

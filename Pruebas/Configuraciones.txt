@@ -1,0 +1,319 @@
+------------------ Configuracion 1 ------------------
+Cantidad de Mobiles: 4 
+Cantidad de Generaciones: 5000 
+Cantidad de individuos de la Poblacion: 100 
+Probabilidad de Cruce: 1.0 
+Probabilidad de Cruce inter-bloque: 0.5 
+Probabilidad de Mutacion: 0.1 
+Cantidad de individuos por Torneo: 5 
+Cantidad de individuos para Steady-State: 25
+
+------------------ Configuracion 2 ------------------
+Cantidad de Mobiles: 4 
+Cantidad de Generaciones: 5000 
+Cantidad de individuos de la Poblacion: 100 
+Probabilidad de Cruce: 1.0 
+Probabilidad de Cruce inter-bloque: 0.5 
+Probabilidad de Mutacion: 0.1 
+Cantidad de individuos por Torneo: 5 
+Cantidad de individuos para Steady-State: 50 
+
+------------------ Configuracion 3 ------------------
+Cantidad de Mobiles: 4 
+Cantidad de Generaciones: 5000 
+Cantidad de individuos de la Poblacion: 100 
+Probabilidad de Cruce: 1.0 
+Probabilidad de Cruce inter-bloque: 0.5 
+Probabilidad de Mutacion: 0.1 
+Cantidad de individuos por Torneo: 10 
+Cantidad de individuos para Steady-State: 25 
+
+------------------ Configuracion 4 ------------------
+Cantidad de Mobiles: 4 
+Cantidad de Generaciones: 5000 
+Cantidad de individuos de la Poblacion: 100 
+Probabilidad de Cruce: 1.0 
+Probabilidad de Cruce inter-bloque: 0.5 
+Probabilidad de Mutacion: 0.1 
+Cantidad de individuos por Torneo: 10 
+Cantidad de individuos para Steady-State: 50 
+
+------------------ Configuracion 5 ------------------
+Cantidad de Mobiles: 4 
+Cantidad de Generaciones: 5000 
+Cantidad de individuos de la Poblacion: 100 
+Probabilidad de Cruce: 1.0 
+Probabilidad de Cruce inter-bloque: 0.5 
+Probabilidad de Mutacion: 0.2 
+Cantidad de individuos por Torneo: 5 
+Cantidad de individuos para Steady-State: 25 
+
+------------------ Configuracion 6 ------------------
+Cantidad de Mobiles: 4 
+Cantidad de Generaciones: 5000 
+Cantidad de individuos de la Poblacion: 100 
+Probabilidad de Cruce: 1.0 
+Probabilidad de Cruce inter-bloque: 0.5 
+Probabilidad de Mutacion: 0.2 
+Cantidad de individuos por Torneo: 5 
+Cantidad de individuos para Steady-State: 50 
+
+------------------ Configuracion 7 ------------------
+Cantidad de Mobiles: 4 
+Cantidad de Generaciones: 5000 
+Cantidad de individuos de la Poblacion: 100 
+Probabilidad de Cruce: 1.0 
+Probabilidad de Cruce inter-bloque: 0.5 
+Probabilidad de Mutacion: 0.2 
+Cantidad de individuos por Torneo: 10 
+Cantidad de individuos para Steady-State: 25 
+
+------------------ Configuracion 8 ------------------
+Cantidad de Mobiles: 4 
+Cantidad de Generaciones: 5000 
+Cantidad de individuos de la Poblacion: 100 
+Probabilidad de Cruce: 1.0 
+Probabilidad de Cruce inter-bloque: 0.5 
+Probabilidad de Mutacion: 0.2 
+Cantidad de individuos por Torneo: 10 
+Cantidad de individuos para Steady-State: 50 
+
+------------------ Configuracion 9 ------------------
+Cantidad de Mobiles: 4 
+Cantidad de Generaciones: 5000 
+Cantidad de individuos de la Poblacion: 100 
+Probabilidad de Cruce: 1.0 
+Probabilidad de Cruce inter-bloque: 0.5 
+Probabilidad de Mutacion: 0.3 
+Cantidad de individuos por Torneo: 5 
+Cantidad de individuos para Steady-State: 25 
+
+------------------ Configuracion 10 ------------------
+Cantidad de Mobiles: 4 
+Cantidad de Generaciones: 5000 
+Cantidad de individuos de la Poblacion: 100 
+Probabilidad de Cruce: 1.0 
+Probabilidad de Cruce inter-bloque: 0.5 
+Probabilidad de Mutacion: 0.3 
+Cantidad de individuos por Torneo: 5 
+Cantidad de individuos para Steady-State: 50 
+
+------------------ Configuracion 11 ------------------
+Cantidad de Mobiles: 4 
+Cantidad de Generaciones: 5000 
+Cantidad de individuos de la Poblacion: 100 
+Probabilidad de Cruce: 1.0 
+Probabilidad de Cruce inter-bloque: 0.5 
+Probabilidad de Mutacion: 0.3 
+Cantidad de individuos por Torneo: 10 
+Cantidad de individuos para Steady-State: 25 
+
+------------------ Configuracion 12 ------------------
+Cantidad de Mobiles: 4 
+Cantidad de Generaciones: 5000 
+Cantidad de individuos de la Poblacion: 100 
+Probabilidad de Cruce: 1.0 
+Probabilidad de Cruce inter-bloque: 0.5 
+Probabilidad de Mutacion: 0.3 
+Cantidad de individuos por Torneo: 10 
+Cantidad de individuos para Steady-State: 50 
+
+------------------ Configuracion 13 ------------------
+Cantidad de Mobiles: 4 
+Cantidad de Generaciones: 5000 
+Cantidad de individuos de la Poblacion: 100 
+Probabilidad de Cruce: 1.0 
+Probabilidad de Cruce inter-bloque: 0.5 
+Probabilidad de Mutacion: 0.4 
+Cantidad de individuos por Torneo: 5 
+Cantidad de individuos para Steady-State: 25 
+
+------------------ Configuracion 14 ------------------
+Cantidad de Mobiles: 4 
+Cantidad de Generaciones: 5000 
+Cantidad de individuos de la Poblacion: 100 
+Probabilidad de Cruce: 1.0 
+Probabilidad de Cruce inter-bloque: 0.5 
+Probabilidad de Mutacion: 0.4 
+Cantidad de individuos por Torneo: 5 
+Cantidad de individuos para Steady-State: 50 
+
+------------------ Configuracion 15 ------------------
+Cantidad de Mobiles: 4 
+Cantidad de Generaciones: 5000 
+Cantidad de individuos de la Poblacion: 100 
+Probabilidad de Cruce: 1.0 
+Probabilidad de Cruce inter-bloque: 0.5 
+Probabilidad de Mutacion: 0.4 
+Cantidad de individuos por Torneo: 10 
+Cantidad de individuos para Steady-State: 25 
+
+------------------ Configuracion 16 ------------------
+Cantidad de Mobiles: 4 
+Cantidad de Generaciones: 5000 
+Cantidad de individuos de la Poblacion: 100 
+Probabilidad de Cruce: 1.0 
+Probabilidad de Cruce inter-bloque: 0.5 
+Probabilidad de Mutacion: 0.4 
+Cantidad de individuos por Torneo: 10 
+Cantidad de individuos para Steady-State: 50 
+
+------------------ Configuracion 17 ------------------
+Cantidad de Mobiles: 4 
+Cantidad de Generaciones: 5000 
+Cantidad de individuos de la Poblacion: 200 
+Probabilidad de Cruce: 1.0 
+Probabilidad de Cruce inter-bloque: 0.5 
+Probabilidad de Mutacion: 0.1 
+Cantidad de individuos por Torneo: 5 
+Cantidad de individuos para Steady-State: 50 
+
+------------------ Configuracion 18 ------------------
+Cantidad de Mobiles: 4 
+Cantidad de Generaciones: 5000 
+Cantidad de individuos de la Poblacion: 200 
+Probabilidad de Cruce: 1.0 
+Probabilidad de Cruce inter-bloque: 0.5 
+Probabilidad de Mutacion: 0.1 
+Cantidad de individuos por Torneo: 5 
+Cantidad de individuos para Steady-State: 100 
+
+------------------ Configuracion 19 ------------------
+Cantidad de Mobiles: 4 
+Cantidad de Generaciones: 5000 
+Cantidad de individuos de la Poblacion: 200 
+Probabilidad de Cruce: 1.0 
+Probabilidad de Cruce inter-bloque: 0.5 
+Probabilidad de Mutacion: 0.1 
+Cantidad de individuos por Torneo: 10 
+Cantidad de individuos para Steady-State: 50
+
+------------------ Configuracion 20 ------------------
+Cantidad de Mobiles: 4 
+Cantidad de Generaciones: 5000 
+Cantidad de individuos de la Poblacion: 200 
+Probabilidad de Cruce: 1.0 
+Probabilidad de Cruce inter-bloque: 0.5 
+Probabilidad de Mutacion: 0.1 
+Cantidad de individuos por Torneo: 10 
+Cantidad de individuos para Steady-State: 100 
+
+------------------ Configuracion 21 ------------------ 
+Cantidad de Mobiles: 4 
+Cantidad de Generaciones: 5000 
+Cantidad de individuos de la Poblacion: 200 
+Probabilidad de Cruce: 1.0 
+Probabilidad de Cruce inter-bloque: 0.5 
+Probabilidad de Mutacion: 0.2 
+Cantidad de individuos por Torneo: 5 
+Cantidad de individuos para Steady-State: 50 
+
+------------------ Configuracion 22 ------------------
+Cantidad de Mobiles: 4 
+Cantidad de Generaciones: 5000 
+Cantidad de individuos de la Poblacion: 200 
+Probabilidad de Cruce: 1.0 
+Probabilidad de Cruce inter-bloque: 0.5 
+Probabilidad de Mutacion: 0.2 
+Cantidad de individuos por Torneo: 5 
+Cantidad de individuos para Steady-State: 100 
+
+------------------ Configuracion 23 ------------------
+Cantidad de Mobiles: 4 
+Cantidad de Generaciones: 5000 
+Cantidad de individuos de la Poblacion: 200 
+Probabilidad de Cruce: 1.0 
+Probabilidad de Cruce inter-bloque: 0.5 
+Probabilidad de Mutacion: 0.2 
+Cantidad de individuos por Torneo: 10 
+Cantidad de individuos para Steady-State: 50 
+
+------------------ Configuracion 24 ------------------
+Cantidad de Mobiles: 4 
+Cantidad de Generaciones: 5000 
+Cantidad de individuos de la Poblacion: 200 
+Probabilidad de Cruce: 1.0 
+Probabilidad de Cruce inter-bloque: 0.5 
+Probabilidad de Mutacion: 0.2 
+Cantidad de individuos por Torneo: 10 
+Cantidad de individuos para Steady-State: 100
+
+------------------ Configuracion 25 ------------------
+Cantidad de Mobiles: 4 
+Cantidad de Generaciones: 5000 
+Cantidad de individuos de la Poblacion: 200 
+Probabilidad de Cruce: 1.0 
+Probabilidad de Cruce inter-bloque: 0.5 
+Probabilidad de Mutacion: 0.3 
+Cantidad de individuos por Torneo: 5 
+Cantidad de individuos para Steady-State: 50 
+
+------------------ Configuracion 26 ------------------
+Cantidad de Mobiles: 4 
+Cantidad de Generaciones: 5000 
+Cantidad de individuos de la Poblacion: 200 
+Probabilidad de Cruce: 1.0 
+Probabilidad de Cruce inter-bloque: 0.5 
+Probabilidad de Mutacion: 0.3 
+Cantidad de individuos por Torneo: 5 
+Cantidad de individuos para Steady-State: 100 
+
+------------------ Configuracion 27 ------------------
+Cantidad de Mobiles: 4 
+Cantidad de Generaciones: 5000 
+Cantidad de individuos de la Poblacion: 200 
+Probabilidad de Cruce: 1.0 
+Probabilidad de Cruce inter-bloque: 0.5 
+Probabilidad de Mutacion: 0.3 
+Cantidad de individuos por Torneo: 10 
+Cantidad de individuos para Steady-State: 50 
+
+------------------ Configuracion 28 ------------------
+Cantidad de Mobiles: 4 
+Cantidad de Generaciones: 5000 
+Cantidad de individuos de la Poblacion: 200 
+Probabilidad de Cruce: 1.0 
+Probabilidad de Cruce inter-bloque: 0.5 
+Probabilidad de Mutacion: 0.3 
+Cantidad de individuos por Torneo: 10 
+Cantidad de individuos para Steady-State: 100 
+
+------------------ Configuracion 29 ------------------
+Cantidad de Mobiles: 4 
+Cantidad de Generaciones: 5000 
+Cantidad de individuos de la Poblacion: 200 
+Probabilidad de Cruce: 1.0 
+Probabilidad de Cruce inter-bloque: 0.5 
+Probabilidad de Mutacion: 0.4 
+Cantidad de individuos por Torneo: 5 
+Cantidad de individuos para Steady-State: 50 
+
+------------------ Configuracion 30 ------------------
+Cantidad de Mobiles: 4 
+Cantidad de Generaciones: 5000 
+Cantidad de individuos de la Poblacion: 200 
+Probabilidad de Cruce: 1.0 
+Probabilidad de Cruce inter-bloque: 0.5 
+Probabilidad de Mutacion: 0.4 
+Cantidad de individuos por Torneo: 5 
+Cantidad de individuos para Steady-State: 100 
+
+------------------ Configuracion 31 ------------------
+Cantidad de Mobiles: 4 
+Cantidad de Generaciones: 5000 
+Cantidad de individuos de la Poblacion: 200 
+Probabilidad de Cruce: 1.0 
+Probabilidad de Cruce inter-bloque: 0.5 
+Probabilidad de Mutacion: 0.4 
+Cantidad de individuos por Torneo: 10 
+Cantidad de individuos para Steady-State: 50 
+
+------------------ Configuracion 32 ------------------
+Cantidad de Mobiles: 4 
+Cantidad de Generaciones: 5000 
+Cantidad de individuos de la Poblacion: 200 
+Probabilidad de Cruce: 1.0 
+Probabilidad de Cruce inter-bloque: 0.5 
+Probabilidad de Mutacion: 0.4 
+Cantidad de individuos por Torneo: 10 
+Cantidad de individuos para Steady-State: 100 
