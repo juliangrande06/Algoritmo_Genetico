@@ -14,20 +14,20 @@ import java.util.Random;
 public class Main {
 	
     //Variables a considerar
-    static int long_sec = 2;                        //Longitud de Secuencia
+    static int long_sec = 4;                        //Longitud de Secuencia
     static int cant_parametros = 5;                 //< carga/descarga , bat_act , bat_obj , estado_CPU , estado_pant >
     
     static Integer estado_CPU[] = {0,30,50,75,100}; //Estado del CPU del dispositivo
     static Integer estado_pant[] = {0, 1};          //Estado de la pantalla
     
-    static int cant_gen = 5000;                       //Cantidad de Generaciones
-    static int cant_pob = 100;                        //Cantidad de individuos de la poblacion
-    static int cant_ind_torneo = 10;                   //Cantidad de individuos que compiten en un torneo
-    static double prob_cruce = 1;                     //Probabilidad de Cruce
+    static int cant_gen = 3;                       //Cantidad de Generaciones
+    static int cant_pob = 10;                        //Cantidad de individuos de la poblacion
+    static int cant_ind_torneo = 2;                   //Cantidad de individuos que compiten en un torneo
+    static double prob_cruce = 1.0;                     //Probabilidad de Cruce
     static int tam_bloque = long_sec*cant_parametros; //Tamano del bloque para el Cruce Uniforme
     static double prob_cruce_uniforme = 0.5;          //Probabilidad de Cruce Uniforme
-    static double prob_mutacion = 0.1;                //Probabilidad de Mutacion
-    static int cant_st = 50;                         //Variable de seleccion para Steady-State
+    static double prob_mutacion = 0.4;                //Probabilidad de Mutacion
+    static int cant_st = 2;                         //Variable de seleccion para Steady-State
 
     static ArrayList<ArrayList<Double>> poblacion = new ArrayList<>(); //Poblacion de todas las soluciones
     static List<Integer> pob_padres = new ArrayList<>();               //Contenedor de los ID de los individuos elegidos en la seleccion de padres
@@ -38,70 +38,68 @@ public class Main {
     static String modelo[];         //Modelo de dispositivo
     static Integer nivel_bat_act[]; //Nivel bateria actual
     static Integer nivel_bat_obj[]; //Nivel bateria objetivo
-    static List<Double> target = new ArrayList<>();              
-    
+    static List<Double> target = new ArrayList<>();
+
     //Dato de salida
     static StringBuilder salida = new StringBuilder();
 
+    public static void crearSolucion(ArrayList<Double> solucion, double bat_act, double bat_obj){        
+        solucion.add(0.0);    // se usa para expresar que la tarea es de carga
+        solucion.add(bat_act);
+        solucion.add(bat_obj);
+        solucion.add((double)estado_CPU[(int)(estado_CPU.length*Math.random())]);
+        solucion.add((double)estado_pant[(int)(estado_pant.length*Math.random())]);
+    }
+
     public static void inicializacionAleatoria(){
         ArrayList<Double> solucion;
-        int nivel_bat_intermedio = -1;
+        int nivel_bat_intermedio,nivel_bat_intermedio_2;
 
         //System.out.println("\n   Inicializacion Aleatoria");
         for(int j=0; j<cant_pob; j++){
             solucion= new ArrayList<>();
 
             for(int i=0; i<cant_mobil; i++){
-            	
-            	if(nivel_bat_act[i] < nivel_bat_obj[i]) {
-            	            	
-            	    solucion.add(0.0);    // se usa para expresar que la tarea es de carga
-                    solucion.add((double)nivel_bat_act[i]);
+                if(long_sec == 1){
+                    crearSolucion(solucion, (double)nivel_bat_act[i], (double)nivel_bat_obj[i]);
+                }
+                else if(long_sec == 2){
 
                     if(nivel_bat_act[i]+1 != nivel_bat_obj[i])
-                       nivel_bat_intermedio= ((int)(Math.random()*(nivel_bat_obj[i] - nivel_bat_act[i] -1)) + nivel_bat_act[i]+1);
+                        nivel_bat_intermedio= ((int)(Math.random()*(nivel_bat_obj[i] - nivel_bat_act[i] -1)) + nivel_bat_act[i]+1);
                     else
-                       nivel_bat_intermedio= ((int)(Math.random()*2) + nivel_bat_act[i]);
-                
-            	}
-            	else
-                if(nivel_bat_act[i] > nivel_bat_obj[i]) {
-    	            	
-                	 solucion.add(1.0);    // se usa para expresar que la tarea es de descarga
-                     solucion.add((double)nivel_bat_act[i]);
-
-                     if(nivel_bat_act[i]-1 != nivel_bat_obj[i])
-                        nivel_bat_intermedio= ((int)(Math.random()*(nivel_bat_act[i] - nivel_bat_obj[i] -1)) + nivel_bat_obj[i]+1);
-                     else
-                        nivel_bat_intermedio= ((int)(Math.random()*2) + nivel_bat_obj[i]);
+                        nivel_bat_intermedio= ((int)(Math.random()*2) + nivel_bat_act[i]);
                     
-                }	
-                
-                                
-                solucion.add((double)nivel_bat_intermedio);
+                    crearSolucion(solucion, (double)nivel_bat_act[i], (double)nivel_bat_intermedio);
+                    crearSolucion(solucion, (double)nivel_bat_intermedio, (double)nivel_bat_obj[i]);
+                }
+                else{
 
-                solucion.add((double)estado_CPU[(int)(estado_CPU.length*Math.random())]);
-                solucion.add((double)estado_pant[(int)(estado_pant.length*Math.random())]);
+                    if(nivel_bat_act[i]+1 != nivel_bat_obj[i])
+                        nivel_bat_intermedio= ((int)(Math.random()*(nivel_bat_obj[i] - nivel_bat_act[i] -1)) + nivel_bat_act[i]+1);
+                    else
+                        nivel_bat_intermedio= ((int)(Math.random()*2) + nivel_bat_act[i]);
+                    
+                    crearSolucion(solucion, (double)nivel_bat_act[i], (double)nivel_bat_intermedio);
 
-                if(long_sec == 2){
-                	
-                	if(nivel_bat_act[i] < nivel_bat_obj[i]) 
-                	     solucion.add(0.0);    // se usa para expresar que la tarea es de carga
-                	else
-                		 solucion.add(1.0);    // se usa para expresar que la tarea es de descarga
-                	
-                	solucion.add((double)nivel_bat_intermedio);
-                    solucion.add((double)nivel_bat_obj[i]);
-                    solucion.add((double)estado_CPU[(int)(estado_CPU.length*Math.random())]);
-                    solucion.add((double)estado_pant[(int)(estado_pant.length*Math.random())]);
+
+                    for(int k=2; k<long_sec; k++){
+                        if(nivel_bat_intermedio+1 != nivel_bat_obj[i])
+                            nivel_bat_intermedio_2= ((int)(Math.random()*(nivel_bat_obj[i] - nivel_bat_intermedio -1)) + nivel_bat_intermedio+1);
+                        else
+                            nivel_bat_intermedio_2= ((int)Math.random() + nivel_bat_intermedio);
+                        
+                        crearSolucion(solucion, (double)nivel_bat_intermedio, (double)nivel_bat_intermedio_2);
+                        nivel_bat_intermedio= nivel_bat_intermedio_2;
+                    }
+                    
+                    crearSolucion(solucion, (double)nivel_bat_intermedio, (double)nivel_bat_obj[i]);
                 }
             }
-            
             poblacion.add(solucion);
         }
     }
 
-    /*
     public static void setTarget(){
         double target_inter= -1.0;
 
@@ -125,49 +123,7 @@ public class Main {
             }
             target.add(target_inter);
         }
-    }*/
-    
-    public static void setTarget(){
-        double target_inter= -1.0;
-
-        for(int i=0; i<cant_mobil; i++){
-            switch(modelo[i]){
-                case "motorola_moto_g6":
-                	if(nivel_bat_act[i] < nivel_bat_obj[i])
-                		target_inter= Profiles.model1_ScreenOff[nivel_bat_obj[i]][0] - Profiles.model1_ScreenOff[nivel_bat_act[i]][0];
-                	else	
-                		target_inter= Profiles.model1_ScreenOn_Discharging[nivel_bat_obj[i]][4] - Profiles.model1_ScreenOn_Discharging[nivel_bat_act[i]][4];
-                    break;
-                case "samsung_SM_A305G":
-                	if(nivel_bat_act[i] < nivel_bat_obj[i])
-                		target_inter= Profiles.model2_ScreenOff[nivel_bat_obj[i]][0] - Profiles.model2_ScreenOff[nivel_bat_act[i]][0];
-                	else
-                        target_inter= Profiles.model2_ScreenOn_Discharging[nivel_bat_obj[i]][4] - Profiles.model2_ScreenOn_Discharging[nivel_bat_act[i]][4];
-                    break;
-                case "Xiaomi_Mi_A2_Lite":
-                	if(nivel_bat_act[i] < nivel_bat_obj[i])
-                		target_inter= Profiles.model3_ScreenOff[nivel_bat_obj[i]][0] - Profiles.model3_ScreenOff[nivel_bat_act[i]][0];
-                	else                	
-                        target_inter= Profiles.model3_ScreenOn_Discharging[nivel_bat_obj[i]][4] - Profiles.model3_ScreenOn_Discharging[nivel_bat_act[i]][4];
-                    break;
-                case "Xiaomi_Redmi_Note_7":
-                	if(nivel_bat_act[i] < nivel_bat_obj[i])
-                		target_inter= Profiles.model4_ScreenOff[nivel_bat_obj[i]][0] - Profiles.model4_ScreenOff[nivel_bat_act[i]][0];
-                	else                	
-                        target_inter= Profiles.model4_ScreenOn_Discharging[nivel_bat_obj[i]][4] - Profiles.model4_ScreenOn_Discharging[nivel_bat_act[i]][4];
-                    break;
-                default:
-                    System.out.println("Modelo no encontrado");
-                    break;
-            }
-            target.add(target_inter);
-        }
     }
-
-    
-    
-    
-    
 
     public static void fitness(ArrayList<ArrayList<Double>> pob){
         //System.out.println("\n   Funcion de Fitness");
@@ -190,7 +146,8 @@ public class Main {
                     fila2= solucion.get(bloque+1).intValue();
                     columna= Arrays.asList(estado_CPU).indexOf(solucion.get(bloque+3).intValue());
 
-                    if ( (solucion.get(bloque) == 0.0) && (solucion.get(bloque+4) == 0.0) )  {
+                    //System.out.println(fila1+" ... "+fila2+" ... "+columna);
+                    if(solucion.get(bloque+4) == 0.0){
                         
                         switch(modelo[j]){
                             case "motorola_moto_g6":
@@ -207,8 +164,7 @@ public class Main {
                                 break;
                         }
                     }
-                    else
-                    if ( (solucion.get(bloque) == 0.0) && (solucion.get(bloque+4) == 1.0) ){
+                    else{
                         switch(modelo[j]){
                             case "motorola_moto_g6":
                                 suma += Profiles.model1_ScreenOn[fila1][columna] - Profiles.model1_ScreenOn[fila2][columna];
@@ -224,43 +180,7 @@ public class Main {
                                 break;
                         }
                     }
-                    else
-                    if ( (solucion.get(bloque) == 1.0) && (solucion.get(bloque+4) == 0.0) )  {
-                            
-                         switch(modelo[j]){
-                             case "motorola_moto_g6":
-                                 suma += Profiles.model1_ScreenOff_Discharging[fila1][columna] - Profiles.model1_ScreenOff_Discharging[fila2][columna];
-                                 break;
-                             case "samsung_SM_A305G":
-                                 suma += Profiles.model2_ScreenOff_Discharging[fila1][columna] - Profiles.model2_ScreenOff_Discharging[fila2][columna];
-                                 break;
-                             case "Xiaomi_Mi_A2_Lite":
-                                 suma += Profiles.model3_ScreenOff_Discharging[fila1][columna] - Profiles.model3_ScreenOff_Discharging[fila2][columna];
-                                 break;
-                             case "Xiaomi_Redmi_Note_7":
-                                 suma += Profiles.model4_ScreenOff_Discharging[fila1][columna] - Profiles.model4_ScreenOff_Discharging[fila2][columna];
-                                 break;
-                        }
-                    }	
-                    else
-                    if ( (solucion.get(bloque) == 1.0) && (solucion.get(bloque+4) == 1.0) ){
-                         switch(modelo[j]){
-                             case "motorola_moto_g6":
-                                 suma += Profiles.model1_ScreenOn_Discharging[fila1][columna] - Profiles.model1_ScreenOn_Discharging[fila2][columna];
-                                 break;
-                             case "samsung_SM_A305G":
-                                 suma += Profiles.model2_ScreenOn_Discharging[fila1][columna] - Profiles.model2_ScreenOn_Discharging[fila2][columna];
-                                 break;
-                             case "Xiaomi_Mi_A2_Lite":
-                                 suma += Profiles.model3_ScreenOn_Discharging[fila1][columna] - Profiles.model3_ScreenOn_Discharging[fila2][columna];
-                                 break;
-                             case "Xiaomi_Redmi_Note_7":
-                                 suma += Profiles.model4_ScreenOn_Discharging[fila1][columna] - Profiles.model4_ScreenOn_Discharging[fila2][columna];
-                                 break;
-                         }
-                    }
-                                
-                }  // dentro del bloque de un m�vil, miro los tiempos de sus tareas, y se acumulan en suma
+                }
                 sumados.add(suma);
                 sumatoria += Math.pow(suma - max_target, 2);
             }
@@ -308,8 +228,20 @@ public class Main {
 
     public static void seleccionPadres(){
         //System.out.println("\n   Seleccion de Padres");
-        for(int i= 0; i<cant_pob; i++){
-            pob_padres.add(torneo());
+        int sol_parcial=-1;
+        for(int i=0; i<cant_pob; i++){
+            sol_parcial= torneo();
+            if(i%2 == 0){
+                pob_padres.add(sol_parcial);
+            }
+            else{
+                if(pob_padres.get(i-1) != sol_parcial){
+                    pob_padres.add(sol_parcial);
+                }
+                else{
+                    i--;
+                }
+            }
         }
     }
 
@@ -362,144 +294,162 @@ public class Main {
     public static void cruceUniformeExtremo(){
         //System.out.println("\n   Cruce Uniforme Extremo");
         double prob_aleatoria;
-        int[] lista_pos_cruce= {2,3,4,8,9}; //Lista de posiciones del bloque que voy a cruzar
         ArrayList<Double> hijo1;
         ArrayList<Double> hijo2;
+        List<Integer> lista_pos_cruce= new ArrayList<>(); //Lista de posiciones del bloque que voy a cruzar
+        lista_pos_cruce.add(2);
+        lista_pos_cruce.add(3);
+        lista_pos_cruce.add(4);
+        
+        if(long_sec > 1){
+            for(int i=1; i<long_sec; i++){
+                lista_pos_cruce.add(cant_parametros*i + 3);
+                lista_pos_cruce.add(cant_parametros*i + 4);
+            }
+        }
 
-        if(long_sec == 2){ //En el caso de que haya mas secuencias de carga cambia la logica
-            for(int i=0; i<cant_pob; i= i+2){
-                hijo1= new ArrayList<>(poblacion.get(pob_padres.get(i)));
-                //System.out.println("");
-                //mostrarIndividuo(hijo1);
-                hijo2= new ArrayList<>(poblacion.get(pob_padres.get(i+1)));
-                //mostrarIndividuo(hijo2);
-                prob_aleatoria= Math.random();
+        for(int i=0; i<cant_pob; i= i+2){
+            hijo1= new ArrayList<>(poblacion.get(pob_padres.get(i)));
+            //System.out.println("");
+            //mostrarIndividuo(hijo1);
+            hijo2= new ArrayList<>(poblacion.get(pob_padres.get(i+1)));
+            //mostrarIndividuo(hijo2);
+            prob_aleatoria= Math.random();
 
-                if(prob_aleatoria < prob_cruce){
-                    for(int j=0; j<cant_mobil; j++){ //Por cada mobil
-                        for(int k=0; k<lista_pos_cruce.length; k++){ //Por cada valor del bloque que quiero cruzar
-                            prob_aleatoria= Math.random();
+            if(prob_aleatoria < prob_cruce){
+                for(int j=0; j<cant_mobil; j++){ //Por cada mobil
+                    for(int k=0; k<lista_pos_cruce.size(); k++){ //Por cada valor del bloque que quiero cruzar
+                        prob_aleatoria= Math.random();
 
-                            if(prob_aleatoria < prob_cruce_uniforme){ //Uso la misma probabilidad que la de Cruce Uniforme
-                                int pos_bloque_inter= lista_pos_cruce[k]+(j*tam_bloque);
-                                double valor_intermedio;
-                                int cont_frecuencia= 1;
+                        if(prob_aleatoria < prob_cruce_uniforme){ //Uso la misma probabilidad que la de Cruce Uniforme
+                            int pos_bloque_inter= lista_pos_cruce.get(k);
+                            double valor_intermedio;
+                            int cont_frecuencia= 1;
 
-                                if(lista_pos_cruce[k] == 2){ //Si es 2 significa que tengo que cambiar los valores de carga de bateria
-                                    cont_frecuencia= 2;
-                                }
-
-                                while(cont_frecuencia != 0){
+                            if(long_sec == 1){
+                                if(lista_pos_cruce.get(k) != 2){
                                     valor_intermedio= hijo1.get(pos_bloque_inter);
                                     hijo1.set(pos_bloque_inter, hijo2.get(pos_bloque_inter));
                                     hijo2.set(pos_bloque_inter, valor_intermedio);
-                                    pos_bloque_inter +=  4;
-                                    cont_frecuencia--;
+                                }
+                            }
+                            else{
+                                int corte= 1;
+                                if(lista_pos_cruce.get(k) == 2){ //Si es 2 significa que tengo que cambiar los valores de carga de bateria
+                                    if(long_sec == 2)
+                                        corte= 2;
+                                    else if(long_sec == 3)
+                                        corte= 4;
+                                    else
+                                        corte= (long_sec-3)*2 + 4;
+                                }
+
+                                int rta= 1;
+                                for(cont_frecuencia=0; cont_frecuencia<corte; cont_frecuencia++){
+                                    valor_intermedio= hijo1.get(pos_bloque_inter);
+                                    hijo1.set(pos_bloque_inter, hijo2.get(pos_bloque_inter));
+                                    hijo2.set(pos_bloque_inter, valor_intermedio);
+                                
+                                    if(rta == 1){
+                                        rta= 0;
+                                        pos_bloque_inter +=  4;
+                                    }
+                                    else{
+                                        rta= 1;
+                                        pos_bloque_inter +=  1;
+                                    }
                                 }
                             }
                         }
                     }
-                    //System.out.println("\n### Hubo Cruce Uniforme Extremo");
-                    //mostrarIndividuo(hijo1);
-                    //mostrarIndividuo(hijo2);
                 }
-                //Limpio valores de Fitnes acarreado por los padres
-                int indice_inter= cant_mobil*tam_bloque;
-                int max_indice= hijo1.size()-indice_inter;
-                for(int j=0; j<max_indice; j++){
-                    hijo1.remove(indice_inter);
-                    hijo2.remove(indice_inter);
-                }
-
-                pob_hijos.add(hijo1);
-                pob_hijos.add(hijo2);
+                //System.out.println("\n### Hubo Cruce Uniforme Extremo");
+                //mostrarIndividuo(hijo1);
+                //mostrarIndividuo(hijo2);
             }
+            //Limpio valores de Fitnes acarreado por los padres
+            int indice_inter= cant_mobil*tam_bloque;
+            int max_indice= hijo1.size()-indice_inter;
+            for(int j=0; j<max_indice; j++){
+                hijo1.remove(indice_inter);
+                hijo2.remove(indice_inter);
+            }
+
+            pob_hijos.add(hijo1);
+            pob_hijos.add(hijo2);
         }
     }
 
     public static void mutacion(){
         //System.out.println("\n   Mutacion");
         double prob_aleatoria;
-        int[] lista_pos_mutar= {2,3,4,8,9}; //Lista de posiciones del bloque que voy a mutar
-        List<Integer> niveles_bateria= new ArrayList<>();
+        List<Integer> lista_pos_mutar= new ArrayList<>(); //Lista de posiciones del bloque que voy a mutar
+        lista_pos_mutar.add(2);
+        lista_pos_mutar.add(3);
+        lista_pos_mutar.add(4);
         
+        if(long_sec > 1){
+            for(int i=1; i<long_sec; i++){
+                lista_pos_mutar.add(cant_parametros*i + 3);
+                lista_pos_mutar.add(cant_parametros*i + 4);
+            }
+        }
+
+        List<Integer> niveles_bateria= new ArrayList<>();
         for(int i=0; i<=100; i++){ //Inicializo variable con niveles de bateria
             niveles_bateria.add(i);
         }
 
         for(int i=0; i<pob_hijos.size(); i++){ //Por cada hijo
             for(int j=0; j<cant_mobil; j++){ //Por cada mobil
-                for(int k=0; k<lista_pos_mutar.length; k++){ //Por cada valor del bloque que quiero mutar
+                for(int k=0; k<lista_pos_mutar.size(); k++){ //Por cada valor del bloque que quiero mutar
                     prob_aleatoria= Math.random();
 
                     if(prob_aleatoria < prob_mutacion){
-                        int pos_bloque_inter= lista_pos_mutar[k]+(j*tam_bloque);
+                        int pos_bloque_inter= lista_pos_mutar.get(k);
                         int valor_intermedio= -1;
                         List<Integer> aux;
 
-                        switch(lista_pos_mutar[k]){
+                        switch(pos_bloque_inter % 10){
                             case 2:
-                                int bat_inter= pob_hijos.get(i).get(pos_bloque_inter).intValue();
-                                aux= new ArrayList<>(niveles_bateria);
-                                                                
-                                if(nivel_bat_act[j] < nivel_bat_obj[j]) {
-                                    if(nivel_bat_act[j]+1 != nivel_bat_obj[j]){
-                                	   aux.remove(bat_inter);
-                                	   if((nivel_bat_obj[j] - nivel_bat_act[j]) >= 4) {
-                                           aux= aux.subList(nivel_bat_act[j]+1, nivel_bat_obj[j]-2);
-                                           valor_intermedio= aux.get((int)(Math.random()*aux.size()));
-                                	   }
-                                	   else 
-                                	   if ((nivel_bat_obj[j] - nivel_bat_act[j]) == 2) {
-                                		   valor_intermedio = bat_inter;
-                                	   }
-                                	   else
-                                	   if ((nivel_bat_obj[j] - nivel_bat_act[j]) == 3) {
-                                		   if(bat_inter == nivel_bat_act[j]+1)    
-                                       	    valor_intermedio=nivel_bat_obj[j]-1;
-                                           else
-                                           if(bat_inter == nivel_bat_obj[j]-1)	
-                                       	    valor_intermedio=nivel_bat_act[j]+1;
-                                       }   
-                                    }
-                                    else{
-                                        if(bat_inter == nivel_bat_act[j])    
-                                	       valor_intermedio=nivel_bat_obj[j];
-                                        else
-                                        if(bat_inter == nivel_bat_obj[j])	
-                                	       valor_intermedio=nivel_bat_act[j];                                                               	
-                                    }
-                                }
-                                else
-                                if(nivel_bat_act[j] > nivel_bat_obj[j]) {
-                                     if(nivel_bat_act[j]-1 != nivel_bat_obj[j]){
-                                    	aux.remove(bat_inter); 
-                                    	if((nivel_bat_act[j] - nivel_bat_obj[j]) >= 4) {
-                                             aux= aux.subList(nivel_bat_obj[j]+1, nivel_bat_act[j]-2);
-                                             valor_intermedio= aux.get((int)(Math.random()*aux.size()));
-                                    	}
-                                    	else
-                                    	if ((nivel_bat_act[j] - nivel_bat_obj[j]) == 2) {
-                                     		 valor_intermedio = bat_inter;
-                                     	}
-                                     	else
-                                     	if ((nivel_bat_act[j] - nivel_bat_obj[j]) == 3) {
-                                     		if(bat_inter == nivel_bat_act[j]-1)    
-                                             valor_intermedio=nivel_bat_obj[j]+1;
+                                if(long_sec > 1){
+                                    int bat_inicial= pob_hijos.get(i).get(pos_bloque_inter-1).intValue();
+                                    int bat_inter;
+                                    
+                                    for(int ciclo=0; ciclo<long_sec-1; ciclo++){
+                                        aux= new ArrayList<>(niveles_bateria);
+                                        bat_inter= pob_hijos.get(i).get(pos_bloque_inter).intValue();
+                                        
+                                        if(bat_inicial+2 < nivel_bat_obj[j]){
+                                            if(bat_inicial < bat_inter){
+                                                aux.remove(bat_inter);
+                                                //System.out.println("bat_I: "+bat_inicial+" ... bat_int: "+bat_inter);
+                                                aux= aux.subList(bat_inicial+1, nivel_bat_obj[j]-2);
+                                            }
+                                            else{
+                                                aux= aux.subList(bat_inicial+1, nivel_bat_obj[j]-1);
+                                            }
+
+                                            if(aux.size() != 0)
+                                                valor_intermedio= aux.get((int)(Math.random()*aux.size()));
                                             else
-                                            if(bat_inter == nivel_bat_obj[j]+1)	
-                                             valor_intermedio=nivel_bat_act[j]-1;
+                                                valor_intermedio= bat_inicial+1;
                                         }
-                                     }
-                                     else{
-                                        if(bat_inter == nivel_bat_act[j])    
-                                    	    valor_intermedio=nivel_bat_obj[j];
-                                        else
-                                        if(bat_inter == nivel_bat_obj[j])	
-                                    	    valor_intermedio=nivel_bat_act[j];                                                               	
-                                     }
+                                        else{
+                                            if(bat_inter == nivel_bat_act[j])    
+                                                valor_intermedio=nivel_bat_obj[j];
+                                            else
+                                                if(bat_inter == nivel_bat_obj[j])	
+                                                    valor_intermedio=nivel_bat_act[j];
+                                        }
+
+                                        pob_hijos.get(i).set(pos_bloque_inter, (double)valor_intermedio);
+                                        pos_bloque_inter += 4;
+                                        pob_hijos.get(i).set(pos_bloque_inter, (double)valor_intermedio);
+                                        pos_bloque_inter += 1;
+                                        bat_inicial= bat_inter;
+                                    }
                                 }
-                                
                                 break;
                             
                             case 3:case 8: 
@@ -507,22 +457,18 @@ public class Main {
                                 aux.remove(aux.indexOf(pob_hijos.get(i).get(pos_bloque_inter).intValue()));
 
                                 valor_intermedio= aux.get((int)(aux.size()*Math.random()));
+                                pob_hijos.get(i).set(pos_bloque_inter, (double)valor_intermedio);
                                 break;
 
                             case 4:case 9:
                                 valor_intermedio= 0;
-                                if(pob_hijos.get(i).get(pos_bloque_inter) == 0.0)
+                                if(pob_hijos.get(i).get(pos_bloque_inter) == 0.0){
                                     valor_intermedio= 1;
-                                
+                                }
+                                pob_hijos.get(i).set(pos_bloque_inter, (double)valor_intermedio);
                                 break;
 
                             default: System.out.println("Error de caso");
-                        }
-                        pob_hijos.get(i).set(pos_bloque_inter, (double)valor_intermedio);
-                        
-                        if(lista_pos_mutar[k] == 2){ //Si es 2 significa que tengo que cambiar los valores de carga de bateria
-                            pos_bloque_inter += 4;
-                            pob_hijos.get(i).set(pos_bloque_inter, (double)valor_intermedio);
                         }
                     }
                 }
@@ -655,6 +601,7 @@ public class Main {
 
     public static void inicioArchivo(){
         salida.append("Cantidad de Mobiles: "+cant_mobil+" \n");
+        salida.append("Longitud de Secuencia: "+long_sec+" \n");
         salida.append("Cantidad de Generaciones: "+cant_gen+" \n");
         salida.append("Cantidad de individuos de la Poblacion: "+cant_pob+" \n");
         salida.append("Probabilidad de Cruce: "+prob_cruce+" \n");
@@ -702,21 +649,9 @@ public class Main {
         salida.append("\n\nTiempo aproximado de ejecucion " + (endTime - startTime) + " milisegundos -> "+((endTime - startTime)/1000) + " segundos");
     }
 
-    public static void main(String[] args) throws IOException {
+    public static void running(){
         NumberFormat nf= new DecimalFormat("##.###");
         double bestFit= 0.0;
-        
-        try {
-            Profiles.filterProfiles();
-            Profiles.filterProfilesDischarging();
-            Archivo.readMoviles();
-            setTarget();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        
-        for (int i = 0; i < cant_mobil; i++) 
-        	System.out.println(i + " " + modelo[i] + " " + nivel_bat_act[i] + " " + nivel_bat_obj[i]);
 
         inicioArchivo();
         long startTime = System.currentTimeMillis();
@@ -747,9 +682,30 @@ public class Main {
         }
 
         finArchivo(startTime, bestFit);
-        Archivo.write(salida.toString());
+        try {
+            System.out.println("ENTRE");
+            Archivo.write(salida.toString());
+        } catch (IOException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+    }
+    public static void main(String[] args) throws IOException {
+        try {
+            Profiles.filterProfiles();
+            Archivo.readMoviles();
+            setTarget();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         
-        Archivo.writeMejorSolucion(poblacion.get(0));
+        for (int i = 0; i < cant_mobil; i++){
+        	System.out.println(i + " " + modelo[i] + " " + nivel_bat_act[i] + " " + nivel_bat_obj[i]);
+        }
+
+        for(int i=0; i<10; i++){
+            running();
+            poblacion.clear();
+        }
     }
 }
-
