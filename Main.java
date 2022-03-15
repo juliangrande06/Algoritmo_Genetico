@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Random;
 
@@ -14,118 +15,133 @@ import java.util.Random;
 public class Main {
 	
     //Variables a considerar
-    static int long_sec = 2;                        //Longitud de Secuencia
+    static int long_sec = 4;                        //Longitud de Secuencia
     static int cant_parametros = 5;                 //< carga/descarga , bat_act , bat_obj , estado_CPU , estado_pant >
     
     static Integer estado_CPU[] = {0,30,50,75,100}; //Estado del CPU del dispositivo
     static Integer estado_pant[] = {0, 1};          //Estado de la pantalla
     
-    static int cant_gen = 5000;                       //Cantidad de Generaciones
-    static int cant_pob = 100;                        //Cantidad de individuos de la poblacion
-    static int cant_ind_torneo = 10;                   //Cantidad de individuos que compiten en un torneo
+    static int cant_gen = 4;                       //Cantidad de Generaciones
+    static int cant_pob = 10;                        //Cantidad de individuos de la poblacion
+    static int cant_ind_torneo = 2;                   //Cantidad de individuos que compiten en un torneo
     static double prob_cruce = 1;                     //Probabilidad de Cruce
     static int tam_bloque = long_sec*cant_parametros; //Tamano del bloque para el Cruce Uniforme
     static double prob_cruce_uniforme = 0.5;          //Probabilidad de Cruce Uniforme
     static double prob_mutacion = 0.1;                //Probabilidad de Mutacion
-    static int cant_st = 50;                         //Variable de seleccion para Steady-State
+    static int cant_st = 2;                         //Variable de seleccion para Steady-State
 
     static ArrayList<ArrayList<Double>> poblacion = new ArrayList<>(); //Poblacion de todas las soluciones
     static List<Integer> pob_padres = new ArrayList<>();               //Contenedor de los ID de los individuos elegidos en la seleccion de padres
     static ArrayList<ArrayList<Double>> pob_hijos = new ArrayList<>(); //Poblacion de todas las soluciones hijas
 
     //Datos de entrada
-    static int cant_mobil;          //Cantidad de dispositivos
-    static String modelo[];         //Modelo de dispositivo
-    static Integer nivel_bat_act[]; //Nivel bateria actual
-    static Integer nivel_bat_obj[]; //Nivel bateria objetivo
+    static int cant_mobil;            //Cantidad de dispositivos
+    static String modelo[];           //Modelo de dispositivo
+    static Integer nivel_bat_act[];   //Nivel bateria actual
+    static Integer nivel_bat_obj[];   //Nivel bateria objetivo
+    static int[] secuencia_mobil; //Nivel maximo de secuencias de carga de cada movil
     static List<Double> target = new ArrayList<>();              
     
     //Dato de salida
     static StringBuilder salida = new StringBuilder();
 
+
+    public static void setSecuencia(){ //que hacer si me da 0?
+        int aux=-1;
+        secuencia_mobil= new int[cant_mobil];
+
+        for(int i=0; i<cant_mobil; i++){
+            aux= Math.abs(nivel_bat_obj[i]-nivel_bat_act[i]);
+
+            if(aux < long_sec){
+                secuencia_mobil[i]= aux;
+            }
+            else{
+                secuencia_mobil[i]= long_sec;
+            }
+        }
+    }
+
+    public static void crearSolucion(ArrayList<Double> solucion, double tarea, double bat_act, double bat_obj){        
+        solucion.add(tarea);  //0.0 -> carga ; 1.0 -> descarga
+        solucion.add(bat_act);
+        solucion.add(bat_obj);
+        solucion.add((double)estado_CPU[(int)(estado_CPU.length*Math.random())]);
+        solucion.add((double)estado_pant[(int)(estado_pant.length*Math.random())]);
+    }
+
     public static void inicializacionAleatoria(){
         ArrayList<Double> solucion;
-        int nivel_bat_intermedio = -1;
+        int bat_inter_1,bat_inter_2,pos;
+        List<Integer> nivel_bat_intermedio;
+        List<Integer> nivel_bat_aux;
+        List<Integer> niveles_bateria= new ArrayList<>();
+        
+        for(int i=0; i<=100; i++){ //Inicializo variable con niveles de bateria
+            niveles_bateria.add(i);
+        }
 
         //System.out.println("\n   Inicializacion Aleatoria");
         for(int j=0; j<cant_pob; j++){
             solucion= new ArrayList<>();
 
             for(int i=0; i<cant_mobil; i++){
-            	
-            	if(nivel_bat_act[i] < nivel_bat_obj[i]) {
-            	            	
-            	    solucion.add(0.0);    // se usa para expresar que la tarea es de carga
-                    solucion.add((double)nivel_bat_act[i]);
+                if(secuencia_mobil[i] == 1){
+                    if(nivel_bat_act[i] < nivel_bat_obj[i]){                        
+                        crearSolucion(solucion, 0.0, (double)nivel_bat_act[i], (double)nivel_bat_obj[i]);
+                    }
+                    else{
+                        crearSolucion(solucion, 1.0, (double)nivel_bat_act[i], (double)nivel_bat_obj[i]);
+                    }
+                }
+                else{
+                    nivel_bat_aux= new ArrayList<>(niveles_bateria);
+                    nivel_bat_intermedio= new ArrayList<>();
 
-                    if(nivel_bat_act[i]+1 != nivel_bat_obj[i])
-                       nivel_bat_intermedio= ((int)(Math.random()*(nivel_bat_obj[i] - nivel_bat_act[i] -1)) + nivel_bat_act[i]+1);
-                    else
-                       nivel_bat_intermedio= ((int)(Math.random()*2) + nivel_bat_act[i]);
-                
-            	}
-            	else
-                if(nivel_bat_act[i] > nivel_bat_obj[i]) {
-    	            	
-                	 solucion.add(1.0);    // se usa para expresar que la tarea es de descarga
-                     solucion.add((double)nivel_bat_act[i]);
+                    if(nivel_bat_act[i] < nivel_bat_obj[i]){  //Tarea de carga
+                        nivel_bat_aux= nivel_bat_aux.subList(nivel_bat_act[i]+1, nivel_bat_obj[i]);
+                        //System.out.println("Lista aux: "+nivel_bat_aux);
+                        
+                        for(int k=0; k<secuencia_mobil[i]-1; k++){
+                            pos= (int)(Math.random()*nivel_bat_aux.size());
+                            nivel_bat_intermedio.add(nivel_bat_aux.get(pos));
+                            nivel_bat_aux.remove(pos);
+                        }
+                        Collections.sort(nivel_bat_intermedio);
+                        //System.out.println("Lista aux: "+nivel_bat_intermedio);
+                        bat_inter_1= nivel_bat_act[i];
+                        
+                        for(int k=0; k<secuencia_mobil[i]-1; k++){
+                            bat_inter_2= nivel_bat_intermedio.get(k);
+                            crearSolucion(solucion, 0.0, (double)bat_inter_1, (double)bat_inter_2);
+                            bat_inter_1= bat_inter_2;
+                        }
+                        crearSolucion(solucion, 0.0, (double)bat_inter_1, (double)nivel_bat_obj[i]);
+                    }
+                    else{ //Tarea de descarga
+                        nivel_bat_aux= nivel_bat_aux.subList(nivel_bat_obj[i]+1, nivel_bat_act[i]);
 
-                     if(nivel_bat_act[i]-1 != nivel_bat_obj[i])
-                        nivel_bat_intermedio= ((int)(Math.random()*(nivel_bat_act[i] - nivel_bat_obj[i] -1)) + nivel_bat_obj[i]+1);
-                     else
-                        nivel_bat_intermedio= ((int)(Math.random()*2) + nivel_bat_obj[i]);
-                    
-                }	
-                
-                                
-                solucion.add((double)nivel_bat_intermedio);
-
-                solucion.add((double)estado_CPU[(int)(estado_CPU.length*Math.random())]);
-                solucion.add((double)estado_pant[(int)(estado_pant.length*Math.random())]);
-
-                if(long_sec == 2){
-                	
-                	if(nivel_bat_act[i] < nivel_bat_obj[i]) 
-                	     solucion.add(0.0);    // se usa para expresar que la tarea es de carga
-                	else
-                		 solucion.add(1.0);    // se usa para expresar que la tarea es de descarga
-                	
-                	solucion.add((double)nivel_bat_intermedio);
-                    solucion.add((double)nivel_bat_obj[i]);
-                    solucion.add((double)estado_CPU[(int)(estado_CPU.length*Math.random())]);
-                    solucion.add((double)estado_pant[(int)(estado_pant.length*Math.random())]);
+                        for(int k=0; k<secuencia_mobil[i]-1; k++){
+                            pos= (int)(Math.random()*nivel_bat_aux.size());
+                            nivel_bat_intermedio.add(nivel_bat_aux.get(pos));
+                            nivel_bat_aux.remove(pos);
+                        }
+                        nivel_bat_intermedio.sort(Comparator.reverseOrder());
+                        //System.out.println("Lista aux reversa: "+nivel_bat_intermedio);
+                        bat_inter_1= nivel_bat_act[i];
+                        
+                        for(int k=0; k<secuencia_mobil[i]-1; k++){
+                            bat_inter_2= nivel_bat_intermedio.get(k);
+                            crearSolucion(solucion, 1.0, (double)bat_inter_1, (double)bat_inter_2);
+                            bat_inter_1= bat_inter_2;
+                        }
+                        crearSolucion(solucion, 1.0, (double)bat_inter_1, (double)nivel_bat_obj[i]);
+                    }
                 }
             }
-            
             poblacion.add(solucion);
         }
     }
-
-    /*
-    public static void setTarget(){
-        double target_inter= -1.0;
-
-        for(int i=0; i<cant_mobil; i++){
-            switch(modelo[i]){
-                case "motorola_moto_g6":
-                    target_inter= Profiles.model1_ScreenOff[nivel_bat_obj[i]][0] - Profiles.model1_ScreenOff[nivel_bat_act[i]][0];
-                    break;
-                case "samsung_SM_A305G":
-                    target_inter= Profiles.model2_ScreenOff[nivel_bat_obj[i]][0] - Profiles.model2_ScreenOff[nivel_bat_act[i]][0];
-                    break;
-                case "Xiaomi_Mi_A2_Lite":
-                    target_inter= Profiles.model3_ScreenOff[nivel_bat_obj[i]][0] - Profiles.model3_ScreenOff[nivel_bat_act[i]][0];
-                    break;
-                case "Xiaomi_Redmi_Note_7":
-                    target_inter= Profiles.model4_ScreenOff[nivel_bat_obj[i]][0] - Profiles.model4_ScreenOff[nivel_bat_act[i]][0];
-                    break;
-                default:
-                    System.out.println("Modelo no encontrado");
-                    break;
-            }
-            target.add(target_inter);
-        }
-    }*/
     
     public static void setTarget(){
         double target_inter= -1.0;
@@ -164,14 +180,9 @@ public class Main {
         }
     }
 
-    
-    
-    
-    
-
     public static void fitness(ArrayList<ArrayList<Double>> pob){
         //System.out.println("\n   Funcion de Fitness");
-        int suma, bloque, fila1, fila2, columna;
+        int suma, bloque, bloque_ant, fila1, fila2, columna;
         double sumatoria;
         ArrayList<Integer> sumados= new ArrayList<>();
         double max_target= Collections.max(target);
@@ -180,12 +191,13 @@ public class Main {
         for(int i=0; i<cant_pob; i++){ //Por cada individuo de la poblacion
             solucion= pob.get(i);
             sumatoria= 0.0;
+            bloque_ant= 0;
             
             for(int j=0; j<cant_mobil; j++){ //Por cada movil (cantidad de bloques)
                 suma= 0;
 
-                for(int k=0; k<long_sec; k++){ //Dentro del bloque
-                    bloque= k*cant_parametros + j*tam_bloque;
+                for(int k=0; k<secuencia_mobil[j]; k++){ //Dentro del bloque
+                    bloque= k*cant_parametros + bloque_ant;
                     fila1= solucion.get(bloque+2).intValue();
                     fila2= solucion.get(bloque+1).intValue();
                     columna= Arrays.asList(estado_CPU).indexOf(solucion.get(bloque+3).intValue());
@@ -259,8 +271,8 @@ public class Main {
                                  break;
                          }
                     }
-                                
                 }  // dentro del bloque de un m�vil, miro los tiempos de sus tareas, y se acumulan en suma
+                bloque_ant += secuencia_mobil[j]*cant_parametros;
                 sumados.add(suma);
                 sumatoria += Math.pow(suma - max_target, 2);
             }
@@ -619,15 +631,37 @@ public class Main {
 
 
     public static void mostrarPoblacion(ArrayList<ArrayList<Double>> pob){
+        int contador, largo= 0;
+        int pos= 0;
+        int[] long_bloque= new int[cant_mobil];
+        for(int i=0; i<cant_mobil; i++){
+            long_bloque[i]= secuencia_mobil[i]*cant_parametros;
+            largo += long_bloque[i];
+        }
+
         System.out.println("** Mostrando la Poblacion");
         for(int j=0; j<cant_pob; j++){
+            contador= long_bloque[pos];
             System.out.println("* Solucion "+j);
+            
             for(int i=0; i<pob.get(j).size(); i++){
-                if(i+1 < pob.get(j).size())
-            	    System.out.print(pob.get(j).get(i).intValue() + ",");
-                else
-                    System.out.print(pob.get(j).get(i).intValue());
+                //System.out.print(pob.get(j).get(i).intValue() + ",");
+                if(i+1 == largo){
+                    System.out.print(pob.get(j).get(i).intValue() + ";    ");
+                }
+                else if(i < contador-1){
+                    System.out.print(pob.get(j).get(i).intValue() + ",");
+                }
+                else if(i == contador-1){
+                    System.out.print(+pob.get(j).get(i).intValue() + ";  ");
+                    pos++;
+                    contador += long_bloque[pos];
+                }
+                else{
+                    System.out.print(pob.get(j).get(i).intValue() + ",");
+                }
             }
+            pos= 0;
             System.out.println("");
         }
     }
@@ -656,6 +690,7 @@ public class Main {
     public static void inicioArchivo(){
         salida.append("Cantidad de Mobiles: "+cant_mobil+" \n");
         salida.append("Cantidad de Generaciones: "+cant_gen+" \n");
+        salida.append("Longitud de Secuencia por Movil: "+secuencia_mobil+" \n");
         salida.append("Cantidad de individuos de la Poblacion: "+cant_pob+" \n");
         salida.append("Probabilidad de Cruce: "+prob_cruce+" \n");
         salida.append("Probabilidad de Cruce inter-bloque: "+prob_cruce_uniforme+" \n");
@@ -718,14 +753,15 @@ public class Main {
         for (int i = 0; i < cant_mobil; i++) 
         	System.out.println(i + " " + modelo[i] + " " + nivel_bat_act[i] + " " + nivel_bat_obj[i]);
 
+        setSecuencia();
         inicioArchivo();
         long startTime = System.currentTimeMillis();
         
-        inicializacionAleatoria();
+        inicializacionAleatoria();        
         fitness(poblacion);
         
-        //mostrarPoblacion(poblacion);
-
+        mostrarPoblacion(poblacion);
+/*
         salida.append("\n< Generacion: Mejor Fitness >");
         for(int i=0; i<cant_gen; i++){
             seleccionPadres();
@@ -748,8 +784,7 @@ public class Main {
 
         finArchivo(startTime, bestFit);
         Archivo.write(salida.toString());
-        
-        Archivo.writeMejorSolucion(poblacion.get(0));
+        Archivo.writeMejorSolucion(poblacion.get(0));*/
     }
 }
 

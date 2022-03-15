@@ -63,15 +63,25 @@ public class Main {
                 if(long_sec == 1){
                     crearSolucion(solucion, (double)nivel_bat_act[i], (double)nivel_bat_obj[i]);
                 }
-                else if(long_sec == 2){
-
-                    if(nivel_bat_act[i]+1 != nivel_bat_obj[i])
-                        nivel_bat_intermedio= ((int)(Math.random()*(nivel_bat_obj[i] - nivel_bat_act[i] -1)) + nivel_bat_act[i]+1);
-                    else
-                        nivel_bat_intermedio= ((int)(Math.random()*2) + nivel_bat_act[i]);
-                    
-                    crearSolucion(solucion, (double)nivel_bat_act[i], (double)nivel_bat_intermedio);
-                    crearSolucion(solucion, (double)nivel_bat_intermedio, (double)nivel_bat_obj[i]);
+                else if(secuencia_mobil[i] == 2){
+                    if(nivel_bat_act[i] < nivel_bat_obj[i]){  //Tarea de carga
+                        if(nivel_bat_act[i]+2 != nivel_bat_obj[i]) //Mas de un valor intermedio
+                            nivel_bat_intermedio= ((int)(Math.random()*(nivel_bat_obj[i] - nivel_bat_act[i] -1)) + nivel_bat_act[i]+1);
+                        else
+                            nivel_bat_intermedio= nivel_bat_act[i]+1;
+                        
+                        crearSolucion(solucion, 0.0, (double)nivel_bat_act[i], nivel_bat_intermedio);
+                        crearSolucion(solucion, 0.0, nivel_bat_intermedio, (double)nivel_bat_obj[i]);
+                    }
+                    else{ //Tarea de descarga
+                        if(nivel_bat_act[i] != nivel_bat_obj[i]+2) //Mas de un valor intermedio
+                            nivel_bat_intermedio= ((int)(Math.random()*(nivel_bat_act[i] - nivel_bat_obj[i] -1)) + nivel_bat_obj[i]+1);
+                        else
+                            nivel_bat_intermedio= nivel_bat_act[i]-1;
+                        
+                        crearSolucion(solucion, 1.0, (double)nivel_bat_act[i], nivel_bat_intermedio);
+                        crearSolucion(solucion, 1.0, nivel_bat_intermedio, (double)nivel_bat_obj[i]);
+                    }
                 }
                 else{
 
@@ -345,7 +355,7 @@ public class Main {
                                 }
 
                                 int rta= 1;
-                                for(cont_frecuencia=0; cont_frecuencia<corte; cont_frecuencia++){
+                                for(cont_frecuencia=0; cont_frecuencia<corte; cont_frecuencia++){ //optimizarlo separando los casos
                                     valor_intermedio= hijo1.get(pos_bloque_inter);
                                     hijo1.set(pos_bloque_inter, hijo2.get(pos_bloque_inter));
                                     hijo2.set(pos_bloque_inter, valor_intermedio);
