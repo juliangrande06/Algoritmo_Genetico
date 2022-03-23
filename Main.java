@@ -105,8 +105,8 @@ public class Main {
         bat_inter_1= nivel_bat_act[indice];
         bat_inter_2= nivel_bat_aux.get(pos);
         
-        crearSolucion(solucion, 0.0, (double)bat_inter_1, (double)bat_inter_2); //Descarga
-        crearSolucion(solucion, 1.0, (double)bat_inter_2, (double)bat_inter_1); //Carga
+        crearSolucion(solucion, 1.0, (double)bat_inter_1, (double)bat_inter_2); //Descarga
+        crearSolucion(solucion, 0.0, (double)bat_inter_2, (double)bat_inter_1); //Carga
         secuencia_mobil[indice]= 2;
     }
 
@@ -374,22 +374,9 @@ public class Main {
     }
 
     public static void seleccionPadres(){
-        int sol_parcial=-1;
         //System.out.println("\n   Seleccion de Padres");
-
         for(int i= 0; i<cant_pob; i++){
-            sol_parcial= torneo();
-            if(i%2 == 0){
-                pob_padres.add(sol_parcial);
-            }
-            else{
-                if(pob_padres.get(i-1) != sol_parcial){
-                    pob_padres.add(sol_parcial);
-                }
-                else{
-                    i--;
-                }
-            }
+            pob_padres.add(torneo());
         }
     }
 
