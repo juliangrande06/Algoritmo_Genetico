@@ -1,0 +1,116 @@
+Movil: 1
+
+Tarea: 1
+Tipo de Tarea: Carga
+Nivel de bateria origen: 0
+Nivel de bateria destino: 42
+Nivel de CPU (%): 100
+Estado de pantalla: Apagada
+
+Tarea: 2
+Tipo de Tarea: Carga
+Nivel de bateria origen: 42
+Nivel de bateria destino: 83
+Nivel de CPU (%): 75
+Estado de pantalla: Prendida
+
+Tarea: 3
+Tipo de Tarea: Carga
+Nivel de bateria origen: 83
+Nivel de bateria destino: 94
+Nivel de CPU (%): 50
+Estado de pantalla: Prendida
+
+Tarea: 4
+Tipo de Tarea: Carga
+Nivel de bateria origen: 94
+Nivel de bateria destino: 100
+Nivel de CPU (%): 30
+Estado de pantalla: Apagada
+
+---------------------------------
+Movil: 2
+
+Tarea: 1
+Tipo de Tarea: Carga
+Nivel de bateria origen: 0
+Nivel de bateria destino: 75
+Nivel de CPU (%): 100
+Estado de pantalla: Apagada
+
+Tarea: 2
+Tipo de Tarea: Carga
+Nivel de bateria origen: 75
+Nivel de bateria destino: 84
+Nivel de CPU (%): 30
+Estado de pantalla: Apagada
+
+Tarea: 3
+Tipo de Tarea: Carga
+Nivel de bateria origen: 84
+Nivel de bateria destino: 94
+Nivel de CPU (%): 75
+Estado de pantalla: Prendida
+
+Tarea: 4
+Tipo de Tarea: Carga
+Nivel de bateria origen: 94
+Nivel de bateria destino: 100
+Nivel de CPU (%): 50
+Estado de pantalla: Prendida
+
+---------------------------------
+Movil: 3
+
+Tarea: 1
+Tipo de Tarea: Descarga
+Nivel de bateria origen: 100
+Nivel de bateria destino: 26
+Nivel de CPU (%): 100
+Estado de pantalla: Prendida
+
+Tarea: 2
+Tipo de Tarea: Descarga
+Nivel de bateria origen: 26
+Nivel de bateria destino: 11
+Nivel de CPU (%): 100
+Estado de pantalla: Prendida
+
+Tarea: 3
+Tipo de Tarea: Descarga
+Nivel de bateria origen: 11
+Nivel de bateria destino: 2
+Nivel de CPU (%): 100
+Estado de pantalla: Prendida
+
+Tarea: 4
+Tipo de Tarea: Descarga
+Nivel de bateria origen: 2
+Nivel de bateria destino: 0
+Nivel de CPU (%): 30
+Estado de pantalla: Prendida
+
+---------------------------------
+Movil: 4
+
+Tarea: 1
+Tipo de Tarea: Carga
+Nivel de bateria origen: 98
+Nivel de bateria destino: 99
+Nivel de CPU (%): 50
+Estado de pantalla: Apagada
+
+Tarea: 2
+Tipo de Tarea: Carga
+Nivel de bateria origen: 99
+Nivel de bateria destino: 100
+Nivel de CPU (%): 50
+Estado de pantalla: Apagada
+
+---------------------------------
+
+Tiempo de los moviles (milisegundos) : 17668288 17667383 17668004 619744 
+
+Fitness (Error cuadratico promedio respecto del maximo valor optimo): 8524130
+
+Tiempos optimos de los moviles (milisegundos): 7893468 5819963 17668004 600847 

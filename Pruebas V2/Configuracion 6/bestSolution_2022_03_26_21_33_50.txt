@@ -1,0 +1,109 @@
+Movil: 1
+
+Tarea: 1
+Tipo de Tarea: Carga
+Nivel de bateria origen: 0
+Nivel de bateria destino: 49
+Nivel de CPU (%): 100
+Estado de pantalla: Apagada
+
+Tarea: 2
+Tipo de Tarea: Carga
+Nivel de bateria origen: 49
+Nivel de bateria destino: 90
+Nivel de CPU (%): 100
+Estado de pantalla: Prendida
+
+Tarea: 3
+Tipo de Tarea: Carga
+Nivel de bateria origen: 90
+Nivel de bateria destino: 93
+Nivel de CPU (%): 50
+Estado de pantalla: Apagada
+
+Tarea: 4
+Tipo de Tarea: Carga
+Nivel de bateria origen: 93
+Nivel de bateria destino: 100
+Nivel de CPU (%): 50
+Estado de pantalla: Apagada
+
+---------------------------------
+Movil: 2
+
+Tarea: 1
+Tipo de Tarea: Carga
+Nivel de bateria origen: 0
+Nivel de bateria destino: 56
+Nivel de CPU (%): 100
+Estado de pantalla: Apagada
+
+Tarea: 2
+Tipo de Tarea: Carga
+Nivel de bateria origen: 56
+Nivel de bateria destino: 73
+Nivel de CPU (%): 75
+Estado de pantalla: Prendida
+
+Tarea: 3
+Tipo de Tarea: Carga
+Nivel de bateria origen: 73
+Nivel de bateria destino: 83
+Nivel de CPU (%): 100
+Estado de pantalla: Apagada
+
+Tarea: 4
+Tipo de Tarea: Carga
+Nivel de bateria origen: 83
+Nivel de bateria destino: 100
+Nivel de CPU (%): 100
+Estado de pantalla: Apagada
+
+---------------------------------
+Movil: 3
+
+Tarea: 1
+Tipo de Tarea: Descarga
+Nivel de bateria origen: 100
+Nivel de bateria destino: 67
+Nivel de CPU (%): 100
+Estado de pantalla: Prendida
+
+Tarea: 2
+Tipo de Tarea: Descarga
+Nivel de bateria origen: 67
+Nivel de bateria destino: 43
+Nivel de CPU (%): 100
+Estado de pantalla: Prendida
+
+Tarea: 3
+Tipo de Tarea: Descarga
+Nivel de bateria origen: 43
+Nivel de bateria destino: 2
+Nivel de CPU (%): 100
+Estado de pantalla: Prendida
+
+Tarea: 4
+Tipo de Tarea: Descarga
+Nivel de bateria origen: 2
+Nivel de bateria destino: 0
+Nivel de CPU (%): 50
+Estado de pantalla: Apagada
+
+---------------------------------
+Movil: 4
+
+Tarea: 1
+Tipo de Tarea: Carga
+Nivel de bateria origen: 99
+Nivel de bateria destino: 100
+Nivel de CPU (%): 50
+Estado de pantalla: Apagada
+
+---------------------------------
+
+Tiempo de los moviles (milisegundos) : 17667603 17670951 17668004 335699 
+
+Fitness (Error cuadratico promedio respecto del maximo valor optimo): 8666152
+
+Tiempos optimos de los moviles (milisegundos): 7893468 5819963 17668004 324581 

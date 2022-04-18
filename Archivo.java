@@ -73,7 +73,7 @@ public class Archivo {
     	for(int i=0; i<cant_moviles; i++){
     		valor= solucion.get(posicion).intValue();
     		linea.append(valor+" ");
-			posicion++;	    	
+    		posicion++;
     	}
     	linea.append("\n\n");
     	valor = solucion.get(posicion).intValue();
@@ -88,6 +88,7 @@ public class Archivo {
     	
     	writer.write(linea.toString());
 		writer.close();
+		valor= 0;
     }
     
     public static void readMoviles() throws Exception {

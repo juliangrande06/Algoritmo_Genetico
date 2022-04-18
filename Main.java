@@ -14,19 +14,19 @@ import java.util.stream.IntStream;
 public class Main {
 	
     //Variables a considerar
-    static int long_sec = 2;                        //Longitud de Secuencia
+    static int long_sec = 5;                        //Longitud de Secuencia
     static int cant_parametros = 5;                 //< carga/descarga , bat_act , bat_obj , estado_CPU , estado_pant >
     
     static Integer estado_CPU[] = {0,30,50,75,100}; //Estado del CPU del dispositivo
     static Integer estado_pant[] = {0, 1};          //Estado de la pantalla
     
     static int cant_gen = 5000;                       //Cantidad de Generaciones
-    static int cant_pob = 200;                        //Cantidad de individuos de la poblacion
+    static int cant_pob = 100;                        //Cantidad de individuos de la poblacion
     static int cant_ind_torneo = 10;                   //Cantidad de individuos que compiten en un torneo
     static double prob_cruce = 1;                     //Probabilidad de Cruce
     static double prob_cruce_uniforme = 0.5;          //Probabilidad de Cruce Uniforme
     static double prob_mutacion = 0.1;                //Probabilidad de Mutacion
-    static int cant_st = 50;                         //Variable de seleccion para Steady-State
+    static int cant_st = 25;                         //Variable de seleccion para Steady-State
 
     static ArrayList<ArrayList<Double>> poblacion = new ArrayList<>(); //Poblacion de todas las soluciones
     static List<Integer> pob_padres = new ArrayList<>();               //Contenedor de los ID de los individuos elegidos en la seleccion de padres
@@ -113,7 +113,6 @@ public class Main {
     public static void inicializacionAleatoria(){
         ArrayList<Double> solucion;
         int bat_inter_1,bat_inter_2,pos;
-        double prob_aleatoria;
         List<Integer> nivel_bat_intermedio;
         List<Integer> nivel_bat_aux;
         List<Integer> niveles_bateria= new ArrayList<>();
@@ -127,19 +126,14 @@ public class Main {
             solucion= new ArrayList<>();
 
             for(int i=0; i<cant_mobil; i++){
-                if(secuencia_mobil[i] == 0){
-                    if(nivel_bat_act[i] < 25){
+                if(nivel_bat_act[i] == nivel_bat_obj[i]){
+                	
+                    if(nivel_bat_act[i] < 50)
                         cargaDescarga(solucion, i);
-                    }
-                    else if(nivel_bat_act[i] > 75)
+                    else 
+                    if(nivel_bat_act[i] >= 50)
                         descargaCarga(solucion, i);
-                    else{
-                        prob_aleatoria= Math.random();
-                        if(prob_aleatoria < 0.5)                     
-                            descargaCarga(solucion, i);
-                        else
-                            cargaDescarga(solucion, i);
-                    }
+                    
                 }
                 else if(secuencia_mobil[i] == 1){
                     if(nivel_bat_act[i] < nivel_bat_obj[i]){                        
@@ -442,10 +436,10 @@ public class Main {
             prob_aleatoria= Math.random();
 
             if(prob_aleatoria < prob_cruce){    //Chequeo si debo cruzar
-                prob_aleatoria= Math.random();
+                //prob_aleatoria= Math.random();
                 
                 for(int j=0; j<cant_mobil; j++){    //Por cada movil
-                    prob_aleatoria= Math.random();
+                    //prob_aleatoria= Math.random();
                     int bandera= -1; //-1: no hay decision - 0: no se cruza - 1: se cruza
 
                     for(int k=0; k<secuencia_mobil[j]; k++){    //Por cada tarea de carga/descarga del movil
@@ -534,7 +528,22 @@ public class Main {
                 nivel_bat_intermedio= new ArrayList<>();
                 prob_aleatoria= Math.random();
                 int bandera= 0; //0: no se muta - 1: se muta
-
+                
+                if((prob_aleatoria < prob_mutacion) && (nivel_bat_act[j] == nivel_bat_obj[j])) { //caso donde niveles actual y objetivo son =
+                	bandera = 1;
+                	
+                	if(nivel_bat_act[j] < 50) { // tengo dos tareas: carga/descarga
+                		nivel_bat_aux= nivel_bat_aux.subList(nivel_bat_act[j]+1, 101);
+                		bateriaRandom(nivel_bat_aux, nivel_bat_intermedio, j);   //nivel_bat_intermedio tendr� un solo valor por eso no ordeno
+                	}
+                	else
+                	if(nivel_bat_act[j] >= 50) { // tengo dos tareas: descarga/carga
+                        nivel_bat_aux= nivel_bat_aux.subList(0, nivel_bat_act[j]);
+                    	bateriaRandom(nivel_bat_aux, nivel_bat_intermedio, j);     //nivel_bat_intermedio tendr� un solo valor
+                    }
+                	
+                }
+                else
                 if(prob_aleatoria < prob_mutacion && secuencia_mobil[j] > 1){
                     bandera= 1;
 
@@ -581,7 +590,7 @@ public class Main {
                                 }
                                 break;
                             case 3: //Mutar CPU
-                                if(prob_aleatoria < prob_cruce_uniforme){
+                                if(prob_aleatoria < prob_mutacion){
                                     pos= inicio_bloque+3;
                                     cpu_aux= new ArrayList<>(Arrays.asList(estado_CPU));
                                     cpu_aux.remove(cpu_aux.indexOf(pob_hijos.get(i).get(pos).intValue()));
@@ -590,7 +599,7 @@ public class Main {
                                 }
                                 break;
                             case 4: //Mutar Pantalla
-                                if(prob_aleatoria < prob_cruce_uniforme){
+                                if(prob_aleatoria < prob_mutacion){
                                     pos= inicio_bloque+4;
                                     valor_intermedio= 0;
                                     if(pob_hijos.get(i).get(pos) == 0.0){
@@ -805,7 +814,7 @@ public class Main {
         salida.append("\n\nTiempo aproximado de ejecucion " + (endTime - startTime) + " milisegundos -> "+((endTime - startTime)/1000) + " segundos");
     }
 
-    public static void main(String[] args) throws IOException {
+    public static void running() throws IOException{
         NumberFormat nf= new DecimalFormat("##.###");
         double bestFit= 0.0;
         
@@ -841,9 +850,11 @@ public class Main {
                 
                 //cruceUniformeSimple();
                 cruceUniformeExtremo();
+                //System.out.println("\nCruce\n");
                 //mostrarPoblacion(pob_hijos);
                 
                 mutacion();
+                //System.out.println("\nMutacion\n");
                 //mostrarPoblacion(pob_hijos);
                 
                 fitness(pob_hijos);
@@ -855,6 +866,22 @@ public class Main {
             Archivo.writeMejorSolucion(poblacion.get(0));
         }
         Archivo.write(salida.toString());
+    }
+
+    public static void main(String[] args) throws IOException {
+        double promedio= 0;
+
+        for(int i=0; i<10; i++){
+            running();
+            promedio += poblacion.get(0).get(poblacion.get(0).size()-1);
+
+            pob_hijos.clear();
+            pob_padres.clear();
+            poblacion.clear();
+            target.clear();
+        }
+        promedio= promedio/10;
+        System.out.println(promedio);
     }
 }
 

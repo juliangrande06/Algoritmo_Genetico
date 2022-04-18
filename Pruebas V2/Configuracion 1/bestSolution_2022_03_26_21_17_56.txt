@@ -1,0 +1,74 @@
+Movil: 1
+
+Tarea: 1
+Tipo de Tarea: Carga
+Nivel de bateria origen: 0
+Nivel de bateria destino: 17
+Nivel de CPU (%): 75
+Estado de pantalla: Prendida
+
+Tarea: 2
+Tipo de Tarea: Carga
+Nivel de bateria origen: 17
+Nivel de bateria destino: 100
+Nivel de CPU (%): 50
+Estado de pantalla: Prendida
+
+---------------------------------
+Movil: 2
+
+Tarea: 1
+Tipo de Tarea: Carga
+Nivel de bateria origen: 0
+Nivel de bateria destino: 15
+Nivel de CPU (%): 50
+Estado de pantalla: Prendida
+
+Tarea: 2
+Tipo de Tarea: Carga
+Nivel de bateria origen: 15
+Nivel de bateria destino: 100
+Nivel de CPU (%): 75
+Estado de pantalla: Prendida
+
+---------------------------------
+Movil: 3
+
+Tarea: 1
+Tipo de Tarea: Carga
+Nivel de bateria origen: 0
+Nivel de bateria destino: 1
+Nivel de CPU (%): 30
+Estado de pantalla: Apagada
+
+Tarea: 2
+Tipo de Tarea: Carga
+Nivel de bateria origen: 1
+Nivel de bateria destino: 100
+Nivel de CPU (%): 0
+Estado de pantalla: Apagada
+
+---------------------------------
+Movil: 4
+
+Tarea: 1
+Tipo de Tarea: Carga
+Nivel de bateria origen: 0
+Nivel de bateria destino: 91
+Nivel de CPU (%): 100
+Estado de pantalla: Prendida
+
+Tarea: 2
+Tipo de Tarea: Carga
+Nivel de bateria origen: 91
+Nivel de bateria destino: 100
+Nivel de CPU (%): 0
+Estado de pantalla: Apagada
+
+---------------------------------
+
+Tiempo de los moviles (milisegundos) : 11399184 11390307 11389991 11328686 
+
+Fitness (Error cuadratico promedio respecto del maximo valor optimo): 30995
+
+Tiempos optimos de los moviles (milisegundos): 7893468 5819963 11389991 8108626 

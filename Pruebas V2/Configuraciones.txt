@@ -1,0 +1,113 @@
+------------------ Configuracion 1 ------------------
+Cantidad de Mobiles: 4 (0 a 100)
+Cantidad de Generaciones: 5000 
+Longitud de Secuencia por Movil: 2,2,2,2,
+Cantidad de individuos de la Poblacion: 100 
+Probabilidad de Cruce: 1.0 
+Probabilidad de Cruce inter-bloque: 0.5 
+Probabilidad de Mutacion: 0.1 
+Cantidad de individuos por Torneo: 10 
+Cantidad de individuos para Steady-State: 25 
+Promedio Fitness: 30814.106132287612
+
+------------------ Configuracion 2 ------------------
+Cantidad de Mobiles: 4 (100 a 0)
+Cantidad de Generaciones: 5000 
+Longitud de Secuencia por Movil: 2,2,2,2,
+Cantidad de individuos de la Poblacion: 100 
+Probabilidad de Cruce: 1.0 
+Probabilidad de Cruce inter-bloque: 0.5 
+Probabilidad de Mutacion: 0.1 
+Cantidad de individuos por Torneo: 10 
+Cantidad de individuos para Steady-State: 25 
+Promedio Fitness: 6599.380474263153
+
+------------------ Configuracion 3 ------------------
+Cantidad de Mobiles: 4 (0 a 100 y 100 a 0)
+Cantidad de Generaciones: 5000 
+Longitud de Secuencia por Movil: 2,2,2,2,
+Cantidad de individuos de la Poblacion: 100 
+Probabilidad de Cruce: 1.0 
+Probabilidad de Cruce inter-bloque: 0.5 
+Probabilidad de Mutacion: 0.1 
+Cantidad de individuos por Torneo: 10 
+Cantidad de individuos para Steady-State: 25 
+Promedio Fitness: 9940.323883793093
+
+------------------ Configuracion 4 ------------------
+Cantidad de Mobiles: 4 (1 caso con diferencia entre su nivel actual y su nivel objetivo es 0)
+Cantidad de Generaciones: 5000 
+Longitud de Secuencia por Movil: 4,4,4,0,
+Cantidad de individuos de la Poblacion: 100 
+Probabilidad de Cruce: 1.0 
+Probabilidad de Cruce inter-bloque: 0.5 
+Probabilidad de Mutacion: 0.1 
+Cantidad de individuos por Torneo: 10 
+Cantidad de individuos para Steady-State: 25 
+Promedio Fitness: 5337.3307911900865
+
+------------------ Configuracion 5 ------------------
+Cantidad de Mobiles: 4 (1 caso con diferencia entre su nivel actual y su nivel objetivo es 1 Descarga)
+Cantidad de Generaciones: 5000 
+Longitud de Secuencia por Movil: 4,4,4,1,
+Cantidad de individuos de la Poblacion: 100 
+Probabilidad de Cruce: 1.0 
+Probabilidad de Cruce inter-bloque: 0.5 
+Probabilidad de Mutacion: 0.1 
+Cantidad de individuos por Torneo: 10 
+Cantidad de individuos para Steady-State: 25 
+Promedio Fitness: 8533999.525507193
+
+------------------ Configuracion 6 ------------------
+Cantidad de Mobiles: 4 (1 caso con diferencia entre su nivel actual y su nivel objetivo es 1 Carga)
+Cantidad de Generaciones: 5000 
+Longitud de Secuencia por Movil: 4,4,4,1,
+Cantidad de individuos de la Poblacion: 100 
+Probabilidad de Cruce: 1.0 
+Probabilidad de Cruce inter-bloque: 0.5 
+Probabilidad de Mutacion: 0.1 
+Cantidad de individuos por Torneo: 10 
+Cantidad de individuos para Steady-State: 25 
+Promedio Fitness: 8666152.535630599
+
+------------------ Configuracion 7 ------------------
+Cantidad de Mobiles: 4 (1 caso con diferencia entre su nivel actual y su nivel objetivo es 2 Carga)
+Cantidad de Generaciones: 5000 
+Longitud de Secuencia por Movil: 4,4,4,2,
+Cantidad de individuos de la Poblacion: 100 
+Probabilidad de Cruce: 1.0 
+Probabilidad de Cruce inter-bloque: 0.5 
+Probabilidad de Mutacion: 0.1 
+Cantidad de individuos por Torneo: 10 
+Cantidad de individuos para Steady-State: 25 
+Promedio Fitness: 8524130.030390436
+
+------------------ Configuracion 8 ------------------
+Cantidad de Mobiles: 4 (1 caso con diferencia entre su nivel actual y su nivel objetivo es 2 Descarga)
+Cantidad de Generaciones: 5000 
+Longitud de Secuencia por Movil: 4,4,4,2,
+Cantidad de individuos de la Poblacion: 100 
+Probabilidad de Cruce: 1.0 
+Probabilidad de Cruce inter-bloque: 0.5 
+Probabilidad de Mutacion: 0.1 
+Cantidad de individuos por Torneo: 10 
+Cantidad de individuos para Steady-State: 25 
+Promedio Fitness: 6733998.627718145
+
+------------------ Configuracion 9 ------------------
+Cantidad de Mobiles: 4 (2 casos con diferencia entre su nivel actual y su nivel objetivo es 2 Mix)
+Cantidad de Generaciones: 5000 
+Longitud de Secuencia por Movil: 5,2,5,2,
+Cantidad de individuos de la Poblacion: 100 
+Probabilidad de Cruce: 1.0 
+Probabilidad de Cruce inter-bloque: 0.5 
+Probabilidad de Mutacion: 0.1 
+Cantidad de individuos por Torneo: 10 
+Cantidad de individuos para Steady-State: 25 
+Promedio Fitness: 11049206.485135611
+
+1 Xiaomi_Redmi_Note_7 0 100
+2 motorola_moto_g6 62 60
+3 samsung_SM_A305G 100 0 
+4 Xiaomi_Mi_A2_Lite 50 52
+
